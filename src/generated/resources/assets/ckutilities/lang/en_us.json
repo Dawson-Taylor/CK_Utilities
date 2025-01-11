@@ -1,0 +1,10 @@
+{
+  "ckutilities.festored": "Forge Energy: %s / %s",
+  "item.ckutilities.copper_alloy_axe": "Copper Alloy Axe",
+  "item.ckutilities.copper_alloy_hammer": "Copper Alloy Hammer",
+  "item.ckutilities.copper_alloy_ingot": "Copper Alloy Ingot",
+  "item.ckutilities.copper_alloy_pickaxe": "Copper Alloy Pickaxe",
+  "item.ckutilities.copper_alloy_shovel": "Copper Alloy Shovel",
+  "item.ckutilities.copper_alloy_sword": "Copper Alloy Sword",
+  "itemGroup.DeferredHolder{ResourceKey[minecraft:creative_mode_tab / ckutilities:ckutilities]}": "CK Utilities"
+}

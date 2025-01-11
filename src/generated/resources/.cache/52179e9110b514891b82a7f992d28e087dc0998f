@@ -1,0 +1,6 @@
+// 1.21.1	2025-01-10T08:59:29.2028644	Tags for minecraft:item mod id ckutilities
+87e65589bdb849d7731abea4affe35e5a8842b15 data/ckutilities/tags/item/ingots/copper_alloy.json
+4f906ea2655309b3c0221cc7bad2dd1908ffddd4 data/minecraft/tags/item/axes.json
+fad89b35095e9bd5b62174a05a09b7ad358a355f data/minecraft/tags/item/pickaxes.json
+30b941e6c3c5a16b7a11dd99233869da5d675290 data/minecraft/tags/item/shovels.json
+d9b5be4dc421c3c0b231296aaa4b858acf501fb7 data/minecraft/tags/item/swords.json

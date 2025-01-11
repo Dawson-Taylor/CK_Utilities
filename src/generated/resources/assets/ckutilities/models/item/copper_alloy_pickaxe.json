@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "ckutilities:item/copper_alloy_pickaxe"
+  }
+}
