@@ -10,7 +10,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.energy.EnergyStorage;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import javax.annotation.Nonnull;
@@ -40,9 +39,10 @@ public abstract class ItemEnergy extends ItemBase {
         if(storage != null) {
             int energy = storage.getEnergyStored();
             NumberFormat format = NumberFormat.getInstance();
-            tooltip.add(Component.translatable("ckutilities.festored", format.format(energy), format.format(storage.getMaxEnergyStored()))
-                    .withStyle(ChatFormatting.GRAY));
+            tooltip.add(Component.translatable("misc.ckutilities.festored", format.format(energy), format.format(storage.getMaxEnergyStored()))
+                    .withStyle(ChatFormatting.GOLD));
         }
+
     }
 
     @Override
@@ -101,13 +101,6 @@ public abstract class ItemEnergy extends ItemBase {
                 .orElse(0);
     }
 
-//    public int extractEnergyInternal(ItemStack stack, int maxExtract, boolean simulate) {
-//        return Optional.ofNullable(stack.getCapability(Capabilities.EnergyStorage.ITEM))
-//                .map(cap -> cap instanceof EnergyStorage
-//                        ? cap.extractEnergy(maxExtract, simulate)
-//                        : 0)
-//                .orElse(0);
-//    }
 
     @Deprecated
     public int receiveEnergy(ItemStack stack, int maxReceive, boolean simulate) {

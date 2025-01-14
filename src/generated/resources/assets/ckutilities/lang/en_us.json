@@ -1,10 +1,18 @@
 {
-  "ckutilities.festored": "Forge Energy: %s / %s",
+  "ckutilities.disabled": "Disabled",
+  "ckutilities.enabled": "Enabled",
+  "item.ckutilities.battery": "Battery",
   "item.ckutilities.copper_alloy_axe": "Copper Alloy Axe",
+  "item.ckutilities.copper_alloy_drill": "Copper Alloy Drill",
   "item.ckutilities.copper_alloy_hammer": "Copper Alloy Hammer",
   "item.ckutilities.copper_alloy_ingot": "Copper Alloy Ingot",
   "item.ckutilities.copper_alloy_pickaxe": "Copper Alloy Pickaxe",
   "item.ckutilities.copper_alloy_shovel": "Copper Alloy Shovel",
   "item.ckutilities.copper_alloy_sword": "Copper Alloy Sword",
-  "itemGroup.DeferredHolder{ResourceKey[minecraft:creative_mode_tab / ckutilities:ckutilities]}": "CK Utilities"
+  "itemGroup.DeferredHolder{ResourceKey[minecraft:creative_mode_tab / ckutilities:ckutilities]}": "CK Utilities",
+  "misc.ckutilities.fenone": "Needs a charge",
+  "misc.ckutilities.festored": "Forge Energy: %s / %s",
+  "tooltip.ckutilities.battery.changeMode": "Sneak + right click to toggle inventory charging",
+  "tooltip.ckutilities.battery.discharge": "Charging items in inventory",
+  "tooltip.ckutilities.battery.noDischarge": "Not charging items in inventory"
 }

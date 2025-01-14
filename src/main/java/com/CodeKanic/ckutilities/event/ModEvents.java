@@ -1,7 +1,7 @@
 package com.CodeKanic.ckutilities.event;
 
 import com.CodeKanic.ckutilities.CKUtilities;
-//import com.CodeKanic.ckutilities.common.items.DrillItem;
+import com.CodeKanic.ckutilities.common.items.custom.DrillItem;
 import com.CodeKanic.ckutilities.common.items.custom.HammerItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -41,18 +41,18 @@ public class ModEvents {
             }
         }
     }
-//    @SubscribeEvent
-//    public void onBlockBreaking(BlockEvent.BreakEvent event) {
-//        final Player player = event.getPlayer();
-//        final LevelAccessor level = event.getLevel();
-//        final BlockPos pos = event.getPos();
-//        ItemStack stack = player.getMainHandItem();
-//        if (stack.getItem() instanceof DrillItem drillItem) {
-//            boolean toReturn = drillItem.onBreakBlock(stack, pos, player);
-//            if (toReturn) {
-//                event.setCanceled(true);
-//            }
-//        }
-//    }
+    @SubscribeEvent
+    public static void onBlockBreaking(BlockEvent.BreakEvent event) {
+        final Player player = event.getPlayer();
+        final LevelAccessor level = event.getLevel();
+        final BlockPos pos = event.getPos();
+        ItemStack stack = player.getMainHandItem();
+        if (stack.getItem() instanceof DrillItem drillItem) {
+            boolean toReturn = drillItem.onBreakBlock(stack, pos, player);
+            if (toReturn) {
+                event.setCanceled(true);
+            }
+        }
+    }
 
 }

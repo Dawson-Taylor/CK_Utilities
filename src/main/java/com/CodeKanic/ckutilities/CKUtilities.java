@@ -1,6 +1,5 @@
 package com.CodeKanic.ckutilities;
 
-import com.CodeKanic.ckutilities.common.capabilities.EnergyStorageItemstack;
 import com.CodeKanic.ckutilities.common.items.CKUItems;
 import com.CodeKanic.ckutilities.common.items.CreativeModTab;
 import com.CodeKanic.ckutilities.common.items.datacomponents.CKUDataComponents;
@@ -15,10 +14,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
@@ -41,10 +37,10 @@ public class CKUtilities
 
         CKUDataComponents.register(modEventBus);
         CreativeModTab.register(modEventBus);
-        CKUItems.register(modEventBus);
-
+        CKUItems.init(modEventBus);
 
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)

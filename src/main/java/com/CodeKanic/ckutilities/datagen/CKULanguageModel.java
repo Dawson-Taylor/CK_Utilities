@@ -25,8 +25,16 @@ public class CKULanguageModel extends net.neoforged.neoforge.common.data.Languag
         add(CKUItems.COPPER_ALLOY_AXE.get(), "Copper Alloy Axe");
         add(CKUItems.COPPER_ALLOY_HAMMER.get(), "Copper Alloy Hammer");
         add(CKUItems.COPPER_ALLOY_SWORD.get(), "Copper Alloy Sword");
+        add(CKUItems.COPPER_ALLOY_DRILL.get(), "Copper Alloy Drill");
+        add(CKUItems.BATTERY.get(), "Battery");
 
         //Misc
-        add("ckutilities.festored", "Forge Energy: %s / %s");
+        add("misc.ckutilities.festored", "Forge Energy: %s / %s");
+        add("misc.ckutilities.fenone", "Needs a charge");
+        add("tooltip.ckutilities.battery.discharge", "Charging items in inventory");
+        add("tooltip.ckutilities.battery.noDischarge", "Not charging items in inventory");
+        add("tooltip.ckutilities.battery.changeMode", "Sneak + right click to toggle inventory charging");
+        add("ckutilities.enabled", "Enabled");
+        add("ckutilities.disabled", "Disabled");
     }
 }

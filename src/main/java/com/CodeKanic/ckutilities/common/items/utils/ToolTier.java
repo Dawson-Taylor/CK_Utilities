@@ -7,6 +7,7 @@ import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
@@ -15,8 +16,8 @@ import static net.minecraft.tags.BlockTags.INCORRECT_FOR_NETHERITE_TOOL;
 
 public enum ToolTier implements Tier {
 
-    COPPER_ALLOY(INCORRECT_FOR_DIAMOND_TOOL, 1000, 10.0F, 4.0F, 18, () -> Ingredient.of(CKUItems.COPPER_ALLOY_INGOT.get()));
-    //COPPER_ALLOY_DRILL(INCORRECT_FOR_NETHERITE_TOOL, 2561, 16.0F, 5.0F, 25, () -> Ingredient.of(CKUItems.COPPER_ALLOY_INGOT.get()));
+    COPPER_ALLOY(INCORRECT_FOR_DIAMOND_TOOL, 1000, 10.0F, 4.0F, 18, () -> Ingredient.of(CKUItems.COPPER_ALLOY_INGOT.get())),
+    COPPER_ALLOY_DRILL(INCORRECT_FOR_NETHERITE_TOOL, 2561, 16.0F, 5.0F, 25, () -> Ingredient.of(CKUItems.COPPER_ALLOY_INGOT.get()));
 
 
     private final TagKey<Block> incorrectBlocksForDrops;
@@ -51,7 +52,7 @@ public enum ToolTier implements Tier {
     }
 
     @Override
-    public TagKey<Block> getIncorrectBlocksForDrops() {
+    public @NotNull TagKey<Block> getIncorrectBlocksForDrops() {
         return incorrectBlocksForDrops;
     }
 
@@ -61,7 +62,7 @@ public enum ToolTier implements Tier {
     }
 
     @Override
-    public Ingredient getRepairIngredient() {
+    public @NotNull Ingredient getRepairIngredient() {
         return this.repairIngredient.get();
     }
 }

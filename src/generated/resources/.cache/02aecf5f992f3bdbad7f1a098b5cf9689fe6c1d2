@@ -1,5 +1,7 @@
-// 1.21.1	2025-01-10T08:59:29.2018451	Item Models: ckutilities
+// 1.21.1	2025-01-13T22:53:16.4679465	Item Models: ckutilities
+1acf155116e4b34fb21e1dc84228a07965f1a1f3 assets/ckutilities/models/item/battery.json
 ba2e5e63a76336f1bc05ff7a93bc1e72d6558e7e assets/ckutilities/models/item/copper_alloy_axe.json
+58b6011698dee9da3b38e1bfd226c7088cff88e4 assets/ckutilities/models/item/copper_alloy_drill.json
 e97c56e98fea99dbeabb555027f3549469d0a520 assets/ckutilities/models/item/copper_alloy_hammer.json
 e0944225a8609877dd9191238cce672e1dc7c947 assets/ckutilities/models/item/copper_alloy_ingot.json
 5c7d4cc40e6ebe0cfccab12c467e05cff14d4900 assets/ckutilities/models/item/copper_alloy_pickaxe.json

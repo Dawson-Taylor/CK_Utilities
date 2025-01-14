@@ -1,4 +1,6 @@
-// 1.21.1	2025-01-10T08:59:29.2028644	Tags for minecraft:item mod id ckutilities
+// 1.21.1	2025-01-13T21:33:40.1693554	Tags for minecraft:item mod id ckutilities
+7b32aa88930d41edb2dca98e56750aa967884f3e data/ckutilities/tags/item/battery.json
+a8d0a1ce6dc042c412517785b069d42ef2d2f2ae data/ckutilities/tags/item/drill.json
 87e65589bdb849d7731abea4affe35e5a8842b15 data/ckutilities/tags/item/ingots/copper_alloy.json
 4f906ea2655309b3c0221cc7bad2dd1908ffddd4 data/minecraft/tags/item/axes.json
 fad89b35095e9bd5b62174a05a09b7ad358a355f data/minecraft/tags/item/pickaxes.json
