@@ -1,1 +1,17 @@
-// 1.21.1	2025-01-10T08:59:29.2048746	Recipes
+// 1.21.1	2025-01-14T12:34:00.6021214	Recipes
+5fdd4019f5db4ac49daa39cf7672b471d60b80b9 data/ckutilities/advancement/recipes/misc/battery.json
+e928565c96010ee7b1cc69938b089fb748e8dd9b data/ckutilities/advancement/recipes/misc/copper_alloy_axe.json
+4667f0db4155b1d6d18e17e96ade2025982d7417 data/ckutilities/advancement/recipes/misc/copper_alloy_drill.json
+c49042708707c38963ca389cf760ad0cc6795639 data/ckutilities/advancement/recipes/misc/copper_alloy_hammer.json
+a550ccbf4c48ba5e18488f8f69d889eed34446f4 data/ckutilities/advancement/recipes/misc/copper_alloy_ingot.json
+ba3ba69317eba14904f4eb9e6d031a1c6eb4752d data/ckutilities/advancement/recipes/misc/copper_alloy_pickaxe.json
+fa6169c9bedbbd67636224d6a6967bd88df2e258 data/ckutilities/advancement/recipes/misc/copper_alloy_shovel.json
+a0f91f471b37d0651b15ba3303e61d7df50d7ab7 data/ckutilities/advancement/recipes/misc/copper_alloy_sword.json
+34164c4ea382f60ee1fe0c59de99c2a7a02124fd data/ckutilities/recipe/battery.json
+48eb2b51d7302f5a90c6a091d4cb2c44cff55dde data/ckutilities/recipe/copper_alloy_axe.json
+c8b71759037951f5252fca4279a2aef5556c47ea data/ckutilities/recipe/copper_alloy_drill.json
+741749fd402a12ac14e1b79cb36a602aed6294b7 data/ckutilities/recipe/copper_alloy_hammer.json
+dbd28c538b26257d63f13b406eabdaf2814058fb data/ckutilities/recipe/copper_alloy_ingot.json
+b29181129051b4a1058adeca4010fde70baca603 data/ckutilities/recipe/copper_alloy_pickaxe.json
+c6a3ed0e17f3285e009e058535c286857f441f18 data/ckutilities/recipe/copper_alloy_shovel.json
+8546dfb7d2b9e86ad76376b76420e18e0099f7e8 data/ckutilities/recipe/copper_alloy_sword.json

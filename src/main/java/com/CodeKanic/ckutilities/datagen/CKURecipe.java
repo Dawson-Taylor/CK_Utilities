@@ -1,12 +1,13 @@
 package com.CodeKanic.ckutilities.datagen;
 
 import com.CodeKanic.ckutilities.CKUtilities;
+import com.CodeKanic.ckutilities.common.items.CKUItems;
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
+import net.minecraft.data.recipes.*;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
@@ -41,7 +42,85 @@ public class CKURecipe extends RecipeProvider implements IConditionBuilder {
 
     @Override
     protected void buildRecipes(RecipeOutput recipeOutput) {
+        // Resources
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CKUItems.COPPER_ALLOY_INGOT.get())
+                .pattern("   ")
+                .pattern("CIC")
+                .pattern("   ")
+                .define('I', Items.IRON_INGOT)
+                .define('C', Items.COPPER_INGOT)
+                .group("ckutilities")
+                .unlockedBy("has_copper_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(Items.COPPER_INGOT))
+                .save(recipeOutput);
 
-
+        //Tools
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CKUItems.COPPER_ALLOY_AXE.get())
+                .pattern("CC ")
+                .pattern("CS ")
+                .pattern(" S ")
+                .define('S', Items.STICK)
+                .define('C', CKUItems.COPPER_ALLOY_INGOT)
+                .group("ckutilities")
+                .unlockedBy("has_copper_alloy_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(CKUItems.COPPER_ALLOY_INGOT))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CKUItems.COPPER_ALLOY_PICKAXE.get())
+                .pattern("CCC")
+                .pattern(" S ")
+                .pattern(" S ")
+                .define('S', Items.STICK)
+                .define('C', CKUItems.COPPER_ALLOY_INGOT)
+                .group("ckutilities")
+                .unlockedBy("has_copper_alloy_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(CKUItems.COPPER_ALLOY_INGOT))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CKUItems.COPPER_ALLOY_SHOVEL.get())
+                .pattern(" C ")
+                .pattern(" S ")
+                .pattern(" S ")
+                .define('S', Items.STICK)
+                .define('C', CKUItems.COPPER_ALLOY_INGOT)
+                .group("ckutilities")
+                .unlockedBy("has_copper_alloy_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(CKUItems.COPPER_ALLOY_INGOT))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CKUItems.COPPER_ALLOY_SWORD.get())
+                .pattern(" C ")
+                .pattern(" C ")
+                .pattern(" S ")
+                .define('S', Items.STICK)
+                .define('C', CKUItems.COPPER_ALLOY_INGOT)
+                .group("ckutilities")
+                .unlockedBy("has_copper_alloy_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(CKUItems.COPPER_ALLOY_INGOT))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CKUItems.COPPER_ALLOY_DRILL.get())
+                .pattern(" SP")
+                .pattern("TBP")
+                .pattern("KT ")
+                .define('S', CKUItems.COPPER_ALLOY_SHOVEL)
+                .define('P', CKUItems.COPPER_ALLOY_PICKAXE)
+                .define('B', CKUItems.BATTERY)
+                .define('T', Items.SMOOTH_STONE)
+                .define('K', Items.STICK)
+                .group("ckutilities")
+                .unlockedBy("has_copper_alloy_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(CKUItems.COPPER_ALLOY_INGOT))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CKUItems.COPPER_ALLOY_HAMMER.get())
+                .pattern("CCC")
+                .pattern("CSC")
+                .pattern(" S ")
+                .define('S', Items.STICK)
+                .define('C', CKUItems.COPPER_ALLOY_INGOT)
+                .group("ckutilities")
+                .unlockedBy("has_copper_alloy_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(CKUItems.COPPER_ALLOY_INGOT))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CKUItems.BATTERY.get())
+                .pattern(" D ")
+                .pattern("ICI")
+                .pattern("WWW")
+                .define('I', Items.IRON_INGOT)
+                .define('C', CKUItems.COPPER_ALLOY_INGOT)
+                .define('W', Items.BLACK_WOOL)
+                .define('D', Items.DIAMOND)
+                .group("ckutilities")
+                .unlockedBy("has_copper_alloy_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(CKUItems.COPPER_ALLOY_INGOT))
+                .save(recipeOutput);
     }
 }

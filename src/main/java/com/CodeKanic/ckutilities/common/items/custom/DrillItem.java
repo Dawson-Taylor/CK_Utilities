@@ -5,6 +5,7 @@ import com.CodeKanic.ckutilities.common.items.CKUItems;
 import com.CodeKanic.ckutilities.common.items.CKUTags;
 import com.CodeKanic.ckutilities.common.items.baseitems.ItemEnergy;
 
+import com.CodeKanic.ckutilities.common.items.utils.ToolTier;
 import com.CodeKanic.ckutilities.common.items.utils.Util;
 import com.CodeKanic.ckutilities.common.items.utils.WorldUtil;
 import net.minecraft.core.BlockPos;
@@ -46,7 +47,7 @@ public class DrillItem extends ItemEnergy {
         super(CKUItems.defaultProps()
                         .stacksTo(1)
                         .component(DataComponents.UNBREAKABLE, new Unbreakable(false))
-                        .component(DataComponents.TOOL, Tiers.NETHERITE.createToolProperties(CKUTags.Blocks.MINEABLE_WITH_DRILL))
+                        .component(DataComponents.TOOL, ToolTier.COPPER_ALLOY_DRILL.createToolProperties(CKUTags.Blocks.MINEABLE_WITH_DRILL))
                 , 250000, 1000);
 
         attributes_unpowered = ItemAttributeModifiers.builder()
