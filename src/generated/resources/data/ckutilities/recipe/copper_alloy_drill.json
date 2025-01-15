@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "ckutilities",
+  "key": {
+    "B": {
+      "item": "ckutilities:battery"
+    },
+    "D": {
+      "item": "minecraft:diamond_pickaxe"
+    },
+    "K": {
+      "item": "minecraft:stick"
+    },
+    "P": {
+      "item": "ckutilities:copper_alloy_pickaxe"
+    },
+    "S": {
+      "item": "ckutilities:copper_alloy_shovel"
+    },
+    "T": {
+      "item": "minecraft:smooth_stone"
+    }
+  },
+  "pattern": [
+    " SD",
+    "TBP",
+    "KT "
+  ],
+  "result": {
+    "count": 1,
+    "id": "ckutilities:copper_alloy_drill"
+  }
+}

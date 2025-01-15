@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "ckutilities",
+  "key": {
+    "C": {
+      "item": "ckutilities:copper_alloy_ingot"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "CC ",
+    "CS ",
+    " S "
+  ],
+  "result": {
+    "count": 1,
+    "id": "ckutilities:copper_alloy_axe"
+  }
+}

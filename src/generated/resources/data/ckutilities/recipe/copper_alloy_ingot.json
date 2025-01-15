@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "ckutilities",
+  "key": {
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "   ",
+    "CIC",
+    "   "
+  ],
+  "result": {
+    "count": 1,
+    "id": "ckutilities:copper_alloy_ingot"
+  }
+}
