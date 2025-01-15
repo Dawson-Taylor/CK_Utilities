@@ -3,6 +3,7 @@ package com.CodeKanic.ckutilities.common.items.custom;
 
 import com.CodeKanic.ckutilities.common.items.CKUItems;
 import com.CodeKanic.ckutilities.common.items.CKUTags;
+import com.CodeKanic.ckutilities.common.items.baseitems.ItemBase;
 import com.CodeKanic.ckutilities.common.items.baseitems.ItemEnergy;
 
 import com.CodeKanic.ckutilities.common.items.utils.ToolTier;
@@ -10,6 +11,7 @@ import com.CodeKanic.ckutilities.common.items.utils.Util;
 import com.CodeKanic.ckutilities.common.items.utils.WorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -22,6 +24,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.component.Unbreakable;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
@@ -37,7 +41,7 @@ import java.util.UUID;
 
 public class DrillItem extends ItemEnergy {
 //    public static final int HARVEST_LEVEL = 4;
-    private static final int ENERGY_USE = 100;
+    private static final int ENERGY_USE = 300;
     private static final List<ItemAbility> ACTIONS = List.of(ItemAbilities.SHOVEL_DIG, ItemAbilities.PICKAXE_DIG);
 
     private final ItemAttributeModifiers attributes_unpowered;
@@ -90,7 +94,7 @@ public class DrillItem extends ItemEnergy {
     @Override
     public float getDestroySpeed(@Nonnull ItemStack stack, @Nonnull BlockState state) {
         return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack)
-                ? 1.0f : 0.1f;
+                ? 6.5f : 0.1f;
     }
 
     private Set<UUID> breakers = new HashSet<>();
@@ -165,7 +169,6 @@ public class DrillItem extends ItemEnergy {
         }
         return false;
     }
-
 
     @Override
     public boolean shouldCauseBlockBreakReset(@Nonnull ItemStack oldStack, @Nonnull ItemStack newStack) {

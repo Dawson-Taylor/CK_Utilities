@@ -24,10 +24,10 @@ public class CKUItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(CKUtilities.MODID);
 
     public static final DeferredItem<Item> COPPER_ALLOY_INGOT = ITEMS.register("copper_alloy_ingot", () -> new Item(new Item.Properties()));
-    public static final DeferredItem<PickaxeItem> COPPER_ALLOY_PICKAXE = ITEMS.register("copper_alloy_pickaxe", props -> new PickaxeItem(ToolTier.COPPER_ALLOY, new Item.Properties()));
-    public static final DeferredItem<AxeItem> COPPER_ALLOY_AXE = ITEMS.register("copper_alloy_axe", props -> new AxeItem(ToolTier.COPPER_ALLOY, new Item.Properties()));
-    public static final DeferredItem<ShovelItem> COPPER_ALLOY_SHOVEL = ITEMS.register("copper_alloy_shovel", props -> new ShovelItem( ToolTier.COPPER_ALLOY, new Item.Properties()));
-    public static final DeferredItem<SwordItem> COPPER_ALLOY_SWORD = ITEMS.register("copper_alloy_sword", props -> new SwordItem(ToolTier.COPPER_ALLOY, new Item.Properties()));
+    public static final DeferredItem<PickaxeItem> COPPER_ALLOY_PICKAXE = ITEMS.register("copper_alloy_pickaxe", props -> new PickaxeItem(ToolTier.COPPER_ALLOY, new Item.Properties().attributes(PickaxeItem.createAttributes(ToolTier.COPPER_ALLOY, 0.5f, -2.4f))));
+    public static final DeferredItem<AxeItem> COPPER_ALLOY_AXE = ITEMS.register("copper_alloy_axe", props -> new AxeItem(ToolTier.COPPER_ALLOY, new Item.Properties().attributes(AxeItem.createAttributes(ToolTier.COPPER_ALLOY, 4.5f, -3.2f))));
+    public static final DeferredItem<ShovelItem> COPPER_ALLOY_SHOVEL = ITEMS.register("copper_alloy_shovel", props -> new ShovelItem( ToolTier.COPPER_ALLOY, new Item.Properties().attributes(ShovelItem.createAttributes(ToolTier.COPPER_ALLOY, 1.0f, -2.2f))));
+    public static final DeferredItem<SwordItem> COPPER_ALLOY_SWORD = ITEMS.register("copper_alloy_sword", props -> new SwordItem(ToolTier.COPPER_ALLOY, new Item.Properties().attributes(SwordItem.createAttributes(ToolTier.COPPER_ALLOY, 2.0f, -2.4f))));
 
     public static final DeferredItem<HammerItem> COPPER_ALLOY_HAMMER = ITEMS.register("copper_alloy_hammer",
             () -> new HammerItem(ToolTier.COPPER_ALLOY, new Item.Properties()

@@ -16,8 +16,8 @@ import static net.minecraft.tags.BlockTags.INCORRECT_FOR_NETHERITE_TOOL;
 
 public enum ToolTier implements Tier {
 
-    COPPER_ALLOY(INCORRECT_FOR_DIAMOND_TOOL, 1000, 10.0F, 4.0F, 18, () -> Ingredient.of(CKUItems.COPPER_ALLOY_INGOT.get())),
-    COPPER_ALLOY_DRILL(INCORRECT_FOR_NETHERITE_TOOL, 2561, 16.0F, 5.0F, 25, () -> Ingredient.of(CKUItems.COPPER_ALLOY_INGOT.get()));
+    COPPER_ALLOY(INCORRECT_FOR_DIAMOND_TOOL, 1000, 8.0F, 4.0F, 18, () -> Ingredient.of(CKUItems.COPPER_ALLOY_INGOT.get())),
+    COPPER_ALLOY_DRILL(INCORRECT_FOR_NETHERITE_TOOL, 2561, 8.50F, 5.0F, 25, () -> Ingredient.of(CKUItems.COPPER_ALLOY_INGOT.get()));
 
 
     private final TagKey<Block> incorrectBlocksForDrops;

@@ -91,11 +91,12 @@ public class CKURecipe extends RecipeProvider implements IConditionBuilder {
                 .unlockedBy("has_copper_alloy_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(CKUItems.COPPER_ALLOY_INGOT))
                 .save(recipeOutput);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CKUItems.COPPER_ALLOY_DRILL.get())
-                .pattern(" SP")
+                .pattern(" SD")
                 .pattern("TBP")
                 .pattern("KT ")
                 .define('S', CKUItems.COPPER_ALLOY_SHOVEL)
                 .define('P', CKUItems.COPPER_ALLOY_PICKAXE)
+                .define('D', Items.DIAMOND_PICKAXE)
                 .define('B', CKUItems.BATTERY)
                 .define('T', Items.SMOOTH_STONE)
                 .define('K', Items.STICK)
