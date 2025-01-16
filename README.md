@@ -12,5 +12,5 @@ Additional Resources:
 ==========
 I used a few other mods source codes to write this mod here are the mods that helped and inspired me so far:
 
-[JustDireThings] (https://github.com/Ellpeck/ActuallyAdditions)
-[Actually Additions] (https://github.com/Direwolf20-MC/JustDireThings)
+[JustDireThings](https://github.com/Ellpeck/ActuallyAdditions)
+[Actually Additions](https://github.com/Direwolf20-MC/JustDireThings)
