@@ -6,7 +6,7 @@ This is just items that I would like to have in the game or have back in the gam
 
 Issues
 ============
-If you find any issues with the mod, please report them on the projects [Github issues page here](https://github.com/Dawson-Taylor/CK_Utilities2/issues)
+If you find any issues with the mod, please report them on the projects GitHub issues page [here](https://github.com/Dawson-Taylor/CK_Utilities2/issues)
 
 Additional Resources: 
 ==========
