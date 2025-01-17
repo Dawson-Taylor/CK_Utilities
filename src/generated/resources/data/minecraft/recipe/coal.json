@@ -4,19 +4,16 @@
   "group": "ckutilities",
   "key": {
     "C": {
-      "item": "ckutilities:copper_alloy_block"
-    },
-    "S": {
-      "item": "minecraft:stick"
+      "item": "ckutilities:tiny_coal"
     }
   },
   "pattern": [
     "CCC",
-    "CSC",
-    " S "
+    "C C",
+    "CCC"
   ],
   "result": {
     "count": 1,
-    "id": "ckutilities:copper_alloy_hammer"
+    "id": "minecraft:coal"
   }
 }

@@ -1,5 +1,6 @@
 package com.CodeKanic.ckutilities.common.items.custom;
 
+import com.CodeKanic.ckutilities.common.items.CKUTags;
 import com.CodeKanic.ckutilities.common.items.baseitems.ItemEnergy;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -16,7 +17,7 @@ import java.util.List;
 
 public class HammerItem extends DiggerItem {
     public HammerItem(Tier tier, Properties properties) {
-        super(tier, BlockTags.MINEABLE_WITH_PICKAXE, properties);
+        super(tier, CKUTags.Blocks.MINEABLE_WITH_HAMMER, properties);
     }
 
     public static List<BlockPos> getBlocksToBeDestroyed(int range, BlockPos initalBlockPos, ServerPlayer player) {

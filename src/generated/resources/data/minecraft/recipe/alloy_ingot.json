@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ckutilities:copper_alloy_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "ckutilities:copper_alloy_ingot"
+  }
+}

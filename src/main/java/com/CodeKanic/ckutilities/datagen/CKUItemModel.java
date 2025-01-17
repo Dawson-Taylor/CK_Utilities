@@ -18,6 +18,7 @@ public class CKUItemModel extends ItemModelProvider {
     protected void registerModels() {
 
         basicItem(CKUItems.COPPER_ALLOY_INGOT.get());
+        basicItem(CKUItems.TINY_COAL.get());
 
 
         handheldItem(CKUItems.COPPER_ALLOY_AXE);

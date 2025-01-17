@@ -4,6 +4,7 @@ import com.CodeKanic.ckutilities.CKUtilities;
 import com.CodeKanic.ckutilities.common.items.baseitems.ItemEnergy;
 import com.CodeKanic.ckutilities.common.items.custom.BatteryItem;
 import com.CodeKanic.ckutilities.common.items.custom.DrillItem;
+import com.CodeKanic.ckutilities.common.items.custom.FuelItem;
 import com.CodeKanic.ckutilities.common.items.custom.HammerItem;
 import com.CodeKanic.ckutilities.common.items.datacomponents.CKUDataComponents;
 import com.CodeKanic.ckutilities.common.items.utils.ToolTier;
@@ -15,6 +16,7 @@ import net.neoforged.neoforge.energy.ComponentEnergyStorage;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel;
 import org.spongepowered.include.com.google.common.collect.ImmutableSet;
 
 import java.util.Set;
@@ -35,6 +37,8 @@ public class CKUItems {
 
     public static final DeferredItem<DrillItem> COPPER_ALLOY_DRILL = ITEMS.register("copper_alloy_drill", DrillItem::new);
     public static final DeferredItem<BatteryItem> BATTERY = ITEMS.register("battery", () -> new BatteryItem(200000, 1000));
+
+    public static final DeferredItem<Item> TINY_COAL = ITEMS.register("tiny_coal", () -> new FuelItem(new Item.Properties(), 200));
 
 
 //    public static final Set<DeferredItem<? extends Item>> TOOLS = ImmutableSet.of(

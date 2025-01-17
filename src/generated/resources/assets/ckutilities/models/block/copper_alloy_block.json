@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "ckutilities:block/copper_alloy_block"
+  }
+}

@@ -45,6 +45,8 @@ public class CKUItemTag extends ItemTagsProvider {
                 .add(CKUItems.COPPER_ALLOY_DRILL.get());
         tag(CKUTags.Items.BATTERY)
                 .add(CKUItems.BATTERY.get());
+        tag(ItemTags.COALS)
+                .add(CKUItems.TINY_COAL.get());
 
 
     }

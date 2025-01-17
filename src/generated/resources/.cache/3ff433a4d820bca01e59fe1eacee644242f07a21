@@ -1,2 +1,5 @@
-// 1.21.1	2025-01-10T18:29:15.9828793	Tags for minecraft:block mod id ckutilities
+// 1.21.1	2025-01-17T13:18:01.0747539	Tags for minecraft:block mod id ckutilities
 f7dc293929a2176bc6e428c765f6bf49fbeccdb5 data/ckutilities/tags/block/mineable/drill.json
+f7dc293929a2176bc6e428c765f6bf49fbeccdb5 data/ckutilities/tags/block/mineable/hammer.json
+32b6ff1d037db0647c9d5d555dbe461ea48a5ec5 data/minecraft/tags/block/mineable/pickaxe.json
+32b6ff1d037db0647c9d5d555dbe461ea48a5ec5 data/minecraft/tags/block/needs_iron_tool.json

@@ -1,6 +1,7 @@
 package com.CodeKanic.ckutilities.datagen;
 
 import com.CodeKanic.ckutilities.CKUtilities;
+import com.CodeKanic.ckutilities.common.blocks.CKUBlocks;
 import com.CodeKanic.ckutilities.common.items.CKUItems;
 import com.CodeKanic.ckutilities.common.items.CreativeModTab;
 import net.minecraft.data.PackOutput;
@@ -18,6 +19,8 @@ public class CKULanguageModel extends net.neoforged.neoforge.common.data.Languag
 
         // Resources
         add(CKUItems.COPPER_ALLOY_INGOT.get(), "Copper Alloy Ingot");
+        add(CKUBlocks.COPPER_ALLOY_BLOCK.get(), "Copper Alloy Block");
+        add(CKUItems.TINY_COAL.get(), "Tiny Coal");
 
         //Items - Tools
         add(CKUItems.COPPER_ALLOY_PICKAXE.get(), "Copper Alloy Pickaxe");

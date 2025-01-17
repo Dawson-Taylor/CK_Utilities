@@ -1,3 +1,7 @@
 {
-  "values": {}
+  "values": {
+    "ckutilities:tiny_coal": {
+      "burn_time": 200
+    }
+  }
 }

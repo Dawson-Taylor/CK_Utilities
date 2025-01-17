@@ -1,6 +1,7 @@
 package com.CodeKanic.ckutilities.datagen;
 
 import com.CodeKanic.ckutilities.CKUtilities;
+import com.CodeKanic.ckutilities.common.blocks.CKUBlocks;
 import com.CodeKanic.ckutilities.common.items.CKUItems;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.HolderLookup;
@@ -52,6 +53,29 @@ public class CKURecipe extends RecipeProvider implements IConditionBuilder {
                 .group("ckutilities")
                 .unlockedBy("has_copper_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(Items.COPPER_INGOT))
                 .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CKUBlocks.COPPER_ALLOY_BLOCK.get())
+                .pattern("CCC")
+                .pattern("CCC")
+                .pattern("CCC")
+                .define('C', CKUItems.COPPER_ALLOY_INGOT)
+                .group("ckutilities")
+                .unlockedBy("has_copper_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(Items.COPPER_INGOT))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.COAL)
+                .pattern("CCC")
+                .pattern("C C")
+                .pattern("CCC")
+                .define('C', CKUItems.TINY_COAL)
+                .group("ckutilities")
+                .unlockedBy("has_coal", InventoryChangeTrigger.TriggerInstance.hasItems(Items.COAL))
+                .save(recipeOutput);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, CKUItems.COPPER_ALLOY_INGOT.get(), 9)
+                .requires(CKUBlocks.COPPER_ALLOY_BLOCK)
+                .unlockedBy("has_copper_alloy_block", has(CKUBlocks.COPPER_ALLOY_BLOCK)).save(recipeOutput, "alloy_ingot");
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, CKUItems.TINY_COAL.get(), 8)
+                .requires(Items.COAL)
+                .unlockedBy("has_coal", has(Items.COAL)).save(recipeOutput);
+
 
         //Tools
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CKUItems.COPPER_ALLOY_AXE.get())
@@ -108,7 +132,7 @@ public class CKURecipe extends RecipeProvider implements IConditionBuilder {
                 .pattern("CSC")
                 .pattern(" S ")
                 .define('S', Items.STICK)
-                .define('C', CKUItems.COPPER_ALLOY_INGOT)
+                .define('C', CKUBlocks.COPPER_ALLOY_BLOCK)
                 .group("ckutilities")
                 .unlockedBy("has_copper_alloy_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(CKUItems.COPPER_ALLOY_INGOT))
                 .save(recipeOutput);

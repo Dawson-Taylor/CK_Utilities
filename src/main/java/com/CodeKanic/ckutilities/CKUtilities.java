@@ -1,5 +1,6 @@
 package com.CodeKanic.ckutilities;
 
+import com.CodeKanic.ckutilities.common.blocks.CKUBlocks;
 import com.CodeKanic.ckutilities.common.items.CKUItems;
 import com.CodeKanic.ckutilities.common.items.CreativeModTab;
 import com.CodeKanic.ckutilities.common.items.datacomponents.CKUDataComponents;
@@ -38,6 +39,7 @@ public class CKUtilities
         CKUDataComponents.register(modEventBus);
         CreativeModTab.register(modEventBus);
         CKUItems.init(modEventBus);
+        CKUBlocks.init(modEventBus);
 
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
 
