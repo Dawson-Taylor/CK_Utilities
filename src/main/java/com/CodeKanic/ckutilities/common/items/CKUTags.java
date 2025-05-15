@@ -17,9 +17,7 @@ public class CKUTags {
         public static final TagKey<Block> MINEABLE_WITH_HAMMER = createTag("mineable/hammer");
 
 
-//        private static TagKey<Block> tag() {
-//            return TagKey.create(Registries.BLOCK, CKUtilities.modLoc("mineable/drill"));
-//        }
+
         private static TagKey<Block> createTag(String name) {
             return BlockTags.create(ResourceLocation.fromNamespaceAndPath(CKUtilities.MODID, name));
         }

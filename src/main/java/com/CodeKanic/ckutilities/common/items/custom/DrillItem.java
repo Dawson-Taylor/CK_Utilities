@@ -40,7 +40,7 @@ import java.util.Set;
 import java.util.UUID;
 
 public class DrillItem extends ItemEnergy {
-//    public static final int HARVEST_LEVEL = 4;
+
     private static final int ENERGY_USE = 300;
     private static final List<ItemAbility> ACTIONS = List.of(ItemAbilities.SHOVEL_DIG, ItemAbilities.PICKAXE_DIG);
 
@@ -109,7 +109,7 @@ public class DrillItem extends ItemEnergy {
             HitResult ray = player.pick(Util.getReachDistance(player), 1f, false);
             if (ray instanceof BlockHitResult trace) {
 
-                    toReturn = breakBlocks(stack, 0, player.level(), pos, trace.getDirection(), player);
+                    toReturn = breakBlocks(stack, player.level(), pos, player);
         }
         breakers.remove(player.getUUID());
         return toReturn;
@@ -124,35 +124,15 @@ public class DrillItem extends ItemEnergy {
         return ENERGY_USE;
     }
 
-    public boolean breakBlocks(ItemStack stack, int radius, Level world, BlockPos aPos, Direction side, Player player) {
-        int xRange = radius;
-        int yRange = radius;
-        int zRange = 0;
-
-        //Corrects Blocks to hit depending on Side of original Block hit
-        if (side.getAxis() == Direction.Axis.Y) {
-            zRange = radius;
-            yRange = 0;
-        }
-        if (side.getAxis() == Direction.Axis.X) {
-            xRange = 0;
-            zRange = radius;
-        }
-
-        //Not defined later because main Block is getting broken below
-        BlockState state = world.getBlockState(aPos);
-        float mainHardness = state.getDestroySpeed(world, aPos);
+    public boolean breakBlocks(ItemStack stack, Level world, BlockPos aPos, Player player) {
 
         //Break Middle Block first
         int use = this.getEnergyUsePerBlock(stack);
         if (this.getEnergyStored(stack) >= use) {
-            if (!this.tryHarvestBlock(world, aPos, false, stack, player, use)) {
-                return false;
-            }
+            return this.tryHarvestBlock(world, aPos, false, stack, player, use);
         } else {
             return false;
         }
-        return true;
     }
 
     private boolean tryHarvestBlock ( Level level, BlockPos pos, boolean isExtra, ItemStack stack, Player player, int use) {

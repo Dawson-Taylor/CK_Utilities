@@ -41,7 +41,10 @@ public class CKUtilities
         CKUItems.init(modEventBus);
         CKUBlocks.init(modEventBus);
 
-        modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+
+
+
+        //modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
 
     }
 

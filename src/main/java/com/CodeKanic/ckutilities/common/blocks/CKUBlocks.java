@@ -5,7 +5,6 @@ import com.CodeKanic.ckutilities.common.items.CKUItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
@@ -18,13 +17,7 @@ public class CKUBlocks {
     public static final DeferredRegister.Blocks BLOCKS =
             DeferredRegister.createBlocks(CKUtilities.MODID);
 
-
     public static final DeferredBlock<Block> COPPER_ALLOY_BLOCK = registerBlock("copper_alloy_block", () -> new Block(BlockBehaviour.Properties.of().strength(2f).requiresCorrectToolForDrops().sound(SoundType.METAL)));
-
-
-
-
-
 
 
 
