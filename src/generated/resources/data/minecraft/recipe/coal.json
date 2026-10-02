@@ -1,11 +1,8 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "group": "ckutilities",
   "key": {
-    "C": {
-      "item": "ckutilities:tiny_coal"
-    }
+    "C": "ckutilities:tiny_coal"
   },
   "pattern": [
     "CCC",
@@ -13,7 +10,6 @@
     "CCC"
   ],
   "result": {
-    "count": 1,
     "id": "minecraft:coal"
   }
 }

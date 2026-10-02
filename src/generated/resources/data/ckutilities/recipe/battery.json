@@ -1,20 +1,11 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "group": "ckutilities",
   "key": {
-    "C": {
-      "item": "ckutilities:copper_alloy_ingot"
-    },
-    "D": {
-      "item": "minecraft:diamond"
-    },
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
-    "W": {
-      "item": "minecraft:black_wool"
-    }
+    "C": "ckutilities:copper_alloy_ingot",
+    "D": "minecraft:diamond",
+    "I": "minecraft:iron_ingot",
+    "W": "minecraft:black_wool"
   },
   "pattern": [
     " D ",
@@ -22,7 +13,6 @@
     "WWW"
   ],
   "result": {
-    "count": 1,
     "id": "ckutilities:battery"
   }
 }

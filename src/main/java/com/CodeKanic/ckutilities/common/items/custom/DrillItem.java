@@ -1,18 +1,16 @@
 package com.CodeKanic.ckutilities.common.items.custom;
 
-
-import com.CodeKanic.ckutilities.common.items.CKUItems;
 import com.CodeKanic.ckutilities.common.items.CKUTags;
-import com.CodeKanic.ckutilities.common.items.baseitems.ItemBase;
 import com.CodeKanic.ckutilities.common.items.baseitems.ItemEnergy;
-
 import com.CodeKanic.ckutilities.common.items.utils.ToolTier;
 import com.CodeKanic.ckutilities.common.items.utils.Util;
 import com.CodeKanic.ckutilities.common.items.utils.WorldUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.Holder;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.util.Unit;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlotGroup;
@@ -20,61 +18,57 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
-import net.minecraft.world.item.component.Unbreakable;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
+import net.minecraft.world.item.component.Tool;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.neoforged.neoforge.common.ItemAbilities;
-import net.neoforged.neoforge.common.ItemAbility;
-
-import javax.annotation.Nonnull;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 public class DrillItem extends ItemEnergy {
-
     private static final int ENERGY_USE = 300;
-    private static final List<ItemAbility> ACTIONS = List.of(ItemAbilities.SHOVEL_DIG, ItemAbilities.PICKAXE_DIG);
 
-    private final ItemAttributeModifiers attributes_unpowered;
-    private final ItemAttributeModifiers attributes_powered;
+    private final ItemAttributeModifiers attributesUnpowered;
+    private final ItemAttributeModifiers attributesPowered;
+    private final Set<UUID> breakers = new HashSet<>();
 
-    public DrillItem() {
-        super(CKUItems.defaultProps()
+    public DrillItem(Properties properties) {
+        super(properties
                         .stacksTo(1)
-                        .component(DataComponents.UNBREAKABLE, new Unbreakable(false))
-                        .component(DataComponents.TOOL, ToolTier.COPPER_ALLOY_DRILL.createToolProperties(CKUTags.Blocks.MINEABLE_WITH_DRILL))
-                , 250000, 1000);
+                        .component(DataComponents.UNBREAKABLE, Unit.INSTANCE)
+                        .component(DataComponents.TOOL, drillTool()),
+                250000, 1000);
 
-        attributes_unpowered = ItemAttributeModifiers.builder()
-                .add(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_ID, 0.1F, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                .add(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_ID, -3.0F, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                .build();
+        attributesUnpowered = attributes(0.1F);
+        attributesPowered = attributes(5.0F);
+    }
 
-        attributes_powered = ItemAttributeModifiers.builder()
-                .add(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_ID, 5.0F, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+    private static ItemAttributeModifiers attributes(float attackDamage) {
+        return ItemAttributeModifiers.builder()
+                .add(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_ID, attackDamage, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                 .add(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_ID, -3.0F, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                 .build();
     }
 
-    @Override
-    public boolean canPerformAction(@Nonnull ItemStack stack, @Nonnull ItemAbility toolAction) {
-        return ACTIONS.contains(toolAction);
+    private static Tool drillTool() {
+        HolderGetter<Block> blocks = BuiltInRegistries.acquireBootstrapRegistrationLookup(BuiltInRegistries.BLOCK);
+        return new Tool(List.of(
+                Tool.Rule.deniesDrops(blocks.getOrThrow(BlockTags.INCORRECT_FOR_NETHERITE_TOOL)),
+                Tool.Rule.minesAndDrops(blocks.getOrThrow(CKUTags.Blocks.MINEABLE_WITH_DRILL), ToolTier.COPPER_ALLOY_DRILL.speed())
+        ), 1.0F, 1, true);
     }
 
-    @Nonnull
     @Override
-    public InteractionResult interactLivingEntity(@Nonnull ItemStack stack, @Nonnull Player player, @Nonnull LivingEntity entityHit, @Nonnull InteractionHand hand) {
+    public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity entityHit, InteractionHand hand) {
         int use = this.getEnergyUsePerBlock(stack);
-        if (!(entityHit instanceof Player) || !((Player) entityHit).isCreative()) {
+        if (!(entityHit instanceof Player target) || !target.isCreative()) {
             if (this.getEnergyStored(stack) >= use) {
                 this.extractEnergy(stack, use, false);
             }
@@ -82,41 +76,31 @@ public class DrillItem extends ItemEnergy {
         return InteractionResult.SUCCESS;
     }
 
-    @Nonnull
     @Override
-    public ItemAttributeModifiers getDefaultAttributeModifiers(@Nonnull ItemStack stack) {
-        return this.getEnergyStored(stack) >= ENERGY_USE
-                ? this.attributes_powered
-                : this.attributes_unpowered;
+    public ItemAttributeModifiers getDefaultAttributeModifiers(ItemStack stack) {
+        return this.getEnergyStored(stack) >= ENERGY_USE ? this.attributesPowered : this.attributesUnpowered;
     }
 
-
     @Override
-    public float getDestroySpeed(@Nonnull ItemStack stack, @Nonnull BlockState state) {
-        return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack)
-                ? 6.5f : 0.1f;
+    public float getDestroySpeed(ItemStack stack, BlockState state) {
+        return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) ? 6.5F : 0.1F;
     }
 
-    private Set<UUID> breakers = new HashSet<>();
-
-    public boolean onBreakBlock(@Nonnull ItemStack stack, @Nonnull BlockPos pos, @Nonnull Player player) {
-        if (!breakers.add(player.getUUID())) return false; // Prevent multiple break operations from cascading, and don't execute when sneaking. (Borrowed from Apotheosis)
-        Level level = player.level();
-        boolean toReturn = false;
-        int use = this.getEnergyUsePerBlock(stack);
-
-            //Block hit
-            HitResult ray = player.pick(Util.getReachDistance(player), 1f, false);
-            if (ray instanceof BlockHitResult trace) {
-
-                    toReturn = breakBlocks(stack, player.level(), pos, player);
+    public boolean onBreakBlock(ItemStack stack, BlockPos pos, Player player) {
+        if (!breakers.add(player.getUUID())) {
+            return false;
+        }
+        boolean broken = false;
+        HitResult ray = player.pick(Util.getReachDistance(player), 1f, false);
+        if (ray instanceof BlockHitResult) {
+            broken = breakBlocks(stack, player.level(), pos, player);
         }
         breakers.remove(player.getUUID());
-        return toReturn;
+        return broken;
     }
 
     @Override
-    public boolean isCorrectToolForDrops(@Nonnull ItemStack stack, @Nonnull BlockState state) {
+    public boolean isCorrectToolForDrops(ItemStack stack, BlockState state) {
         return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) && super.isCorrectToolForDrops(stack, state);
     }
 
@@ -124,37 +108,30 @@ public class DrillItem extends ItemEnergy {
         return ENERGY_USE;
     }
 
-    public boolean breakBlocks(ItemStack stack, Level world, BlockPos aPos, Player player) {
-
-        //Break Middle Block first
+    public boolean breakBlocks(ItemStack stack, Level world, BlockPos pos, Player player) {
         int use = this.getEnergyUsePerBlock(stack);
         if (this.getEnergyStored(stack) >= use) {
-            return this.tryHarvestBlock(world, aPos, false, stack, player, use);
-        } else {
-            return false;
+            return this.tryHarvestBlock(world, pos, false, stack, player, use);
         }
+        return false;
     }
 
-    private boolean tryHarvestBlock ( Level level, BlockPos pos, boolean isExtra, ItemStack stack, Player player, int use) {
+    private boolean tryHarvestBlock(Level level, BlockPos pos, boolean isExtra, ItemStack stack, Player player, int use) {
         BlockState state = level.getBlockState(pos);
         float hardness = state.getDestroySpeed(level, pos);
-
-        boolean canHarvest = (player.hasCorrectToolForDrops(state) || this.isCorrectToolForDrops(stack, state)) && (!isExtra || this.getDestroySpeed(stack, level.getBlockState(pos)) > 1.0F);
+        boolean canHarvest = (player.hasCorrectToolForDrops(state) || this.isCorrectToolForDrops(stack, state))
+                && (!isExtra || this.getDestroySpeed(stack, state) > 1.0F);
         if (hardness >= 0.0F && (!isExtra || canHarvest && !state.hasBlockEntity())) {
             if (!player.isCreative()) {
                 this.extractEnergy(stack, use, false);
             }
-            //Break the Block
             return WorldUtil.breakExtraBlock(stack, level, player, pos);
         }
         return false;
     }
 
     @Override
-    public boolean shouldCauseBlockBreakReset(@Nonnull ItemStack oldStack, @Nonnull ItemStack newStack) {
+    public boolean shouldCauseBlockBreakReset(ItemStack oldStack, ItemStack newStack) {
         return !ItemStack.isSameItem(newStack, oldStack);
     }
-
-
-
 }

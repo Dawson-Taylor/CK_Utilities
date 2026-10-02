@@ -11,7 +11,7 @@
   "item.ckutilities.copper_alloy_shovel": "Copper Alloy Shovel",
   "item.ckutilities.copper_alloy_sword": "Copper Alloy Sword",
   "item.ckutilities.tiny_coal": "Tiny Coal",
-  "itemGroup.DeferredHolder{ResourceKey[minecraft:creative_mode_tab / ckutilities:ckutilities]}": "CK Utilities",
+  "itemGroup.ckutilities": "CK Utilities",
   "misc.ckutilities.fenone": "Needs a charge",
   "misc.ckutilities.festored": "Forge Energy: %s / %s",
   "tooltip.ckutilities.battery.changeMode": "Sneak + right click to toggle inventory charging",

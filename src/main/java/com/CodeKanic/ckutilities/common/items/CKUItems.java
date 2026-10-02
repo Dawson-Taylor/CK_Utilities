@@ -8,46 +8,37 @@ import com.CodeKanic.ckutilities.common.items.custom.FuelItem;
 import com.CodeKanic.ckutilities.common.items.custom.HammerItem;
 import com.CodeKanic.ckutilities.common.items.datacomponents.CKUDataComponents;
 import com.CodeKanic.ckutilities.common.items.utils.ToolTier;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ShovelItem;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.energy.ComponentEnergyStorage;
+import net.neoforged.neoforge.transfer.energy.ItemAccessEnergyHandler;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel;
-import org.spongepowered.include.com.google.common.collect.ImmutableSet;
-
-import java.util.Set;
-import java.util.function.Supplier;
 
 public class CKUItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(CKUtilities.MODID);
 
-    public static final DeferredItem<Item> COPPER_ALLOY_INGOT = ITEMS.register("copper_alloy_ingot", () -> new Item(new Item.Properties()));
-    public static final DeferredItem<PickaxeItem> COPPER_ALLOY_PICKAXE = ITEMS.register("copper_alloy_pickaxe", props -> new PickaxeItem(ToolTier.COPPER_ALLOY, new Item.Properties().attributes(PickaxeItem.createAttributes(ToolTier.COPPER_ALLOY, 0.5f, -2.4f))));
-    public static final DeferredItem<AxeItem> COPPER_ALLOY_AXE = ITEMS.register("copper_alloy_axe", props -> new AxeItem(ToolTier.COPPER_ALLOY, new Item.Properties().attributes(AxeItem.createAttributes(ToolTier.COPPER_ALLOY, 4.5f, -3.2f))));
-    public static final DeferredItem<ShovelItem> COPPER_ALLOY_SHOVEL = ITEMS.register("copper_alloy_shovel", props -> new ShovelItem( ToolTier.COPPER_ALLOY, new Item.Properties().attributes(ShovelItem.createAttributes(ToolTier.COPPER_ALLOY, 1.0f, -2.2f))));
-    public static final DeferredItem<SwordItem> COPPER_ALLOY_SWORD = ITEMS.register("copper_alloy_sword", props -> new SwordItem(ToolTier.COPPER_ALLOY, new Item.Properties().attributes(SwordItem.createAttributes(ToolTier.COPPER_ALLOY, 2.0f, -2.4f))));
-
-    public static final DeferredItem<HammerItem> COPPER_ALLOY_HAMMER = ITEMS.register("copper_alloy_hammer",
-            () -> new HammerItem(ToolTier.COPPER_ALLOY, new Item.Properties()
-                    .attributes(PickaxeItem.createAttributes(ToolTier.COPPER_ALLOY, 7F, -3.5f))));
-
-    public static final DeferredItem<DrillItem> COPPER_ALLOY_DRILL = ITEMS.register("copper_alloy_drill", DrillItem::new);
-    public static final DeferredItem<BatteryItem> BATTERY = ITEMS.register("battery", () -> new BatteryItem(200000, 1000));
-
-    public static final DeferredItem<Item> TINY_COAL = ITEMS.register("tiny_coal", () -> new FuelItem(new Item.Properties(), 200));
-
-
-//    public static final Set<DeferredItem<? extends Item>> TOOLS = ImmutableSet.of(
-//            // All in one tools
-//            BATTERY
-//    );
-
-
-
+    public static final DeferredItem<Item> COPPER_ALLOY_INGOT = ITEMS.registerSimpleItem("copper_alloy_ingot");
+    public static final DeferredItem<Item> COPPER_ALLOY_PICKAXE = ITEMS.registerItem("copper_alloy_pickaxe",
+            properties -> new Item(properties.pickaxe(ToolTier.COPPER_ALLOY, 0.5F, -2.4F)));
+    public static final DeferredItem<AxeItem> COPPER_ALLOY_AXE = ITEMS.registerItem("copper_alloy_axe",
+            properties -> new AxeItem(ToolTier.COPPER_ALLOY, 4.5F, -3.2F, properties));
+    public static final DeferredItem<ShovelItem> COPPER_ALLOY_SHOVEL = ITEMS.registerItem("copper_alloy_shovel",
+            properties -> new ShovelItem(ToolTier.COPPER_ALLOY, 1.0F, -2.2F, properties));
+    public static final DeferredItem<Item> COPPER_ALLOY_SWORD = ITEMS.registerItem("copper_alloy_sword",
+            properties -> new Item(properties.sword(ToolTier.COPPER_ALLOY, 2.0F, -2.4F)));
+    public static final DeferredItem<HammerItem> COPPER_ALLOY_HAMMER = ITEMS.registerItem("copper_alloy_hammer",
+            properties -> new HammerItem(properties.tool(
+                    ToolTier.COPPER_ALLOY, CKUTags.Blocks.MINEABLE_WITH_HAMMER, 7.0F, -3.5F, 0.0F)));
+    public static final DeferredItem<DrillItem> COPPER_ALLOY_DRILL = ITEMS.registerItem("copper_alloy_drill", DrillItem::new);
+    public static final DeferredItem<BatteryItem> BATTERY = ITEMS.registerItem("battery",
+            properties -> new BatteryItem(properties, 200000, 1000));
+    public static final DeferredItem<Item> TINY_COAL = ITEMS.registerItem("tiny_coal",
+            properties -> new FuelItem(properties, 200));
 
     public static Item.Properties defaultProps() {
         return new Item.Properties();
@@ -61,10 +52,12 @@ public class CKUItems {
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         for (DeferredHolder<Item, ? extends Item> holder : ITEMS.getEntries()) {
             if (holder.get() instanceof ItemEnergy energyItem) {
-                event.registerItem(Capabilities.EnergyStorage.ITEM, (stack, context) ->
-                                new ComponentEnergyStorage(stack, CKUDataComponents.ENERGY_STORAGE.get(), energyItem.maxPower, energyItem.transfer),
-                        energyItem
-                );
+                event.registerItem(Capabilities.Energy.ITEM, (stack, access) -> {
+                    if (access == null) {
+                        return null;
+                    }
+                    return new ItemAccessEnergyHandler(access, CKUDataComponents.ENERGY_STORAGE.get(), energyItem.maxPower, energyItem.transfer);
+                }, energyItem);
             }
         }
     }

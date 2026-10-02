@@ -1,68 +1,27 @@
 package com.CodeKanic.ckutilities.common.items.utils;
 
+import com.CodeKanic.ckutilities.common.items.CKUTags;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.item.ToolMaterial;
 
-import com.CodeKanic.ckutilities.common.items.CKUItems;
-import net.minecraft.tags.TagKey;
-import net.minecraft.util.LazyLoadedValue;
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.block.Block;
-import org.jetbrains.annotations.NotNull;
+public final class ToolTier {
+    public static final ToolMaterial COPPER_ALLOY = new ToolMaterial(
+            BlockTags.INCORRECT_FOR_DIAMOND_TOOL,
+            1000,
+            8.0F,
+            4.0F,
+            18,
+            CKUTags.Items.COPPER_ALLOY_INGOTS
+    );
+    public static final ToolMaterial COPPER_ALLOY_DRILL = new ToolMaterial(
+            BlockTags.INCORRECT_FOR_NETHERITE_TOOL,
+            2561,
+            8.5F,
+            5.0F,
+            25,
+            CKUTags.Items.COPPER_ALLOY_INGOTS
+    );
 
-import java.util.function.Supplier;
-
-import static net.minecraft.tags.BlockTags.INCORRECT_FOR_DIAMOND_TOOL;
-import static net.minecraft.tags.BlockTags.INCORRECT_FOR_NETHERITE_TOOL;
-
-public enum ToolTier implements Tier {
-
-    COPPER_ALLOY(INCORRECT_FOR_DIAMOND_TOOL, 1000, 8.0F, 4.0F, 18, () -> Ingredient.of(CKUItems.COPPER_ALLOY_INGOT.get())),
-    COPPER_ALLOY_DRILL(INCORRECT_FOR_NETHERITE_TOOL, 2561, 8.50F, 5.0F, 25, () -> Ingredient.of(CKUItems.COPPER_ALLOY_INGOT.get()));
-
-
-    private final TagKey<Block> incorrectBlocksForDrops;
-    private final int uses;
-    private final float speed;
-    private final float damage;
-    private final int enchantmentValue;
-    private final LazyLoadedValue<Ingredient> repairIngredient;
-
-    ToolTier(TagKey<Block> incorrectBlocksForDrops, int pUses, float pSpeed, float pDamage, int pEnchantmentValue, Supplier<Ingredient> pRepairIngredient) {
-        this.incorrectBlocksForDrops = incorrectBlocksForDrops;
-        this.uses = pUses;
-        this.speed = pSpeed;
-        this.damage = pDamage;
-        this.enchantmentValue = pEnchantmentValue;
-        this.repairIngredient = new LazyLoadedValue<>(pRepairIngredient);
-    }
-
-    @Override
-    public int getUses() {
-        return this.uses;
-    }
-
-    @Override
-    public float getSpeed() {
-        return this.speed;
-    }
-
-    @Override
-    public float getAttackDamageBonus() {
-        return this.damage;
-    }
-
-    @Override
-    public @NotNull TagKey<Block> getIncorrectBlocksForDrops() {
-        return incorrectBlocksForDrops;
-    }
-
-    @Override
-    public int getEnchantmentValue() {
-        return this.enchantmentValue;
-    }
-
-    @Override
-    public @NotNull Ingredient getRepairIngredient() {
-        return this.repairIngredient.get();
+    private ToolTier() {
     }
 }
