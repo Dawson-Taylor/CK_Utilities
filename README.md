@@ -21,13 +21,13 @@ Drill upgrades are included on this branch. Hold the drill in one hand and sneak
 - Silk Touch
 - An upgrade template used to craft every upgrade. Each higher tier is crafted from the previous tier and a template. Fortune and Silk Touch cannot both be applied.
 
-## Building
+## Installing
 
-This branch targets Java 25.
+This mod is meant to be added to a CurseForge (or other launcher) instance for its Minecraft version. This line is Minecraft 26.2 with NeoForge.
 
-```
-./gradlew runClient
-```
+There is no CurseForge release yet.
+
+Developers can build the source with `./gradlew runClient` on Java 25.
 
 ## Issues
 
