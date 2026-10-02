@@ -1,7 +1,9 @@
 {
+  "block.ckutilities.charger": "Charger",
   "block.ckutilities.copper_alloy_block": "Copper Alloy Block",
   "ckutilities.disabled": "Disabled",
   "ckutilities.enabled": "Enabled",
+  "container.ckutilities.charger": "Charger",
   "item.ckutilities.battery": "Battery",
   "item.ckutilities.copper_alloy_axe": "Copper Alloy Axe",
   "item.ckutilities.copper_alloy_drill": "Copper Alloy Drill",

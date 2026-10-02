@@ -18,6 +18,7 @@ public class CKULootTables extends BlockLootSubProvider {
     @Override
     protected void generate() {
         dropSelf(CKUBlocks.COPPER_ALLOY_BLOCK.get());
+        dropSelf(CKUBlocks.CHARGER.get());
 
 
     }

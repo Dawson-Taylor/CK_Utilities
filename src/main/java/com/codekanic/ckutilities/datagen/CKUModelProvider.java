@@ -22,6 +22,7 @@ public class CKUModelProvider extends ModelProvider {
     @Override
     protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
         blockModels.createTrivialCube(CKUBlocks.COPPER_ALLOY_BLOCK.get());
+        blockModels.createTrivialCube(CKUBlocks.CHARGER.get());
 
         itemModels.generateFlatItem(CKUItems.COPPER_ALLOY_INGOT.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(CKUItems.TINY_COAL.get(), ModelTemplates.FLAT_ITEM);

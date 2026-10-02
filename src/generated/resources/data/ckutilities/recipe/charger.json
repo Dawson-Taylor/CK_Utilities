@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ckutilities",
+  "key": {
+    "B": "ckutilities:battery",
+    "C": "ckutilities:copper_alloy_ingot"
+  },
+  "pattern": [
+    "CCC",
+    "CBC",
+    "CCC"
+  ],
+  "result": {
+    "id": "ckutilities:charger"
+  }
+}
