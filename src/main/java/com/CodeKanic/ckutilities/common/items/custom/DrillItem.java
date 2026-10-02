@@ -13,10 +13,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlotGroup;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -68,18 +65,6 @@ public class DrillItem extends ItemEnergy {
     @Override
     public boolean canPerformAction(@Nonnull ItemStack stack, @Nonnull ItemAbility toolAction) {
         return ACTIONS.contains(toolAction);
-    }
-
-    @Nonnull
-    @Override
-    public InteractionResult interactLivingEntity(@Nonnull ItemStack stack, @Nonnull Player player, @Nonnull LivingEntity entityHit, @Nonnull InteractionHand hand) {
-        int use = this.getEnergyUsePerBlock(stack);
-        if (!(entityHit instanceof Player) || !((Player) entityHit).isCreative()) {
-            if (this.getEnergyStored(stack) >= use) {
-                this.extractEnergy(stack, use, false);
-            }
-        }
-        return InteractionResult.SUCCESS;
     }
 
     @Nonnull
