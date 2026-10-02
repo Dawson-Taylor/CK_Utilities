@@ -32,20 +32,22 @@ public class BatteryItem extends ItemEnergy {
 
     @Override
     public void inventoryTick(@Nonnull ItemStack stack, Level world, @Nonnull Entity entity, int itemSlot, boolean isSelected) {
-        if (!world.isClientSide && entity instanceof Player player && ItemUtil.isEnabled(stack) && !isSelected) {
+        // Keep charging while this battery is the held item. Skip this stack so it cannot feed itself.
+        if (!world.isClientSide && entity instanceof Player player && ItemUtil.isEnabled(stack)) {
             for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
                 ItemStack slot = player.getInventory().getItem(i);
-                if (!slot.isEmpty() && slot.getCount() == 1) {
-                    Optional<IEnergyStorage> energy = Optional.ofNullable(slot.getCapability(Capabilities.EnergyStorage.ITEM));
-                    energy.ifPresent(cap -> {
-                        int extractable = this.extractEnergy(stack, Integer.MAX_VALUE, true);
-                        int received = cap.receiveEnergy(extractable, false);
-
-                        if (received > 0) {
-                            this.extractEnergy(stack, received, false);
-                        }
-                    });
+                if (slot == stack || slot.isEmpty() || slot.getCount() != 1) {
+                    continue;
                 }
+                Optional<IEnergyStorage> energy = Optional.ofNullable(slot.getCapability(Capabilities.EnergyStorage.ITEM));
+                energy.ifPresent(cap -> {
+                    int extractable = this.extractEnergy(stack, Integer.MAX_VALUE, true);
+                    int received = cap.receiveEnergy(extractable, false);
+
+                    if (received > 0) {
+                        this.extractEnergy(stack, received, false);
+                    }
+                });
             }
         }
     }
