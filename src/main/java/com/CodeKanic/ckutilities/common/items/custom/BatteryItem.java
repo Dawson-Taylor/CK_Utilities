@@ -15,11 +15,18 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import javax.annotation.Nonnull;
+import java.lang.ref.WeakReference;
+import java.util.Collections;
+import java.util.IdentityHashMap;
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
 
 public class BatteryItem extends ItemEnergy {
 
+    /** Stacks that already spent their transfer budget during this level's current game tick. */
+    private static final Set<ItemStack> CHARGED_THIS_TICK = Collections.newSetFromMap(new IdentityHashMap<>());
+    private static WeakReference<Level> chargedLevel = new WeakReference<>(null);
+    private static long chargedGameTime = Long.MIN_VALUE;
 
     public BatteryItem(int maxPower, int transfer) {
         super(maxPower, transfer);
@@ -32,24 +39,61 @@ public class BatteryItem extends ItemEnergy {
 
     @Override
     public void inventoryTick(@Nonnull ItemStack stack, Level world, @Nonnull Entity entity, int itemSlot, boolean isSelected) {
-        // Keep charging while this battery is the held item. Skip this stack so it cannot feed itself.
-        if (!world.isClientSide && entity instanceof Player player && ItemUtil.isEnabled(stack)) {
-            for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
-                ItemStack slot = player.getInventory().getItem(i);
-                if (slot == stack || slot.isEmpty() || slot.getCount() != 1) {
-                    continue;
-                }
-                Optional<IEnergyStorage> energy = Optional.ofNullable(slot.getCapability(Capabilities.EnergyStorage.ITEM));
-                energy.ifPresent(cap -> {
-                    int extractable = this.extractEnergy(stack, Integer.MAX_VALUE, true);
-                    int received = cap.receiveEnergy(extractable, false);
+        // 1.21.1 ticks the main inventory and the offhand. The same stack must only charge once.
+        if (world.isClientSide || !(entity instanceof Player player) || !ItemUtil.isEnabled(stack)) {
+            return;
+        }
+        if (!claimChargeTick(world, stack)) {
+            return;
+        }
+        chargeInventory(stack, player);
+    }
 
-                    if (received > 0) {
-                        this.extractEnergy(stack, received, false);
-                    }
-                });
+    /**
+     * Moves at most this battery's transfer rate, in total, into other single-item stacks.
+     * Skips this stack, empty stacks, stacked items, and slots with no energy capability.
+     */
+    public void chargeInventory(ItemStack battery, Player player) {
+        if (!ItemUtil.isEnabled(battery)) {
+            return;
+        }
+        int remaining = this.transfer;
+        if (remaining <= 0) {
+            return;
+        }
+        net.minecraft.world.entity.player.Inventory inventory = player.getInventory();
+        for (int i = 0; i < inventory.getContainerSize() && remaining > 0; i++) {
+            ItemStack slot = inventory.getItem(i);
+            if (slot == battery || slot.isEmpty() || slot.getCount() != 1) {
+                continue;
+            }
+            IEnergyStorage cap = slot.getCapability(Capabilities.EnergyStorage.ITEM);
+            if (cap == null) {
+                continue;
+            }
+            int extractable = this.extractEnergy(battery, remaining, true);
+            if (extractable <= 0) {
+                break;
+            }
+            int received = cap.receiveEnergy(extractable, false);
+            if (received > 0) {
+                this.extractEnergy(battery, received, false);
+                remaining -= received;
             }
         }
+    }
+
+    /**
+     * @return true the first time this stack is allowed to charge during the current level tick
+     */
+    public boolean claimChargeTick(Level level, ItemStack stack) {
+        long time = level.getGameTime();
+        if (chargedLevel.get() != level || chargedGameTime != time) {
+            CHARGED_THIS_TICK.clear();
+            chargedLevel = new WeakReference<>(level);
+            chargedGameTime = time;
+        }
+        return CHARGED_THIS_TICK.add(stack);
     }
 
     @Nonnull

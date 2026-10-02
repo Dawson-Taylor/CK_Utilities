@@ -30,7 +30,17 @@ public class CreativeModTab {
                 });
                 CKUBlocks.BLOCKS.getEntries().forEach(e -> {
                     Block block = e.get();
-                    output.accept(block);
+                    Item blockItem = block.asItem();
+                    boolean alreadyListed = false;
+                    for (DeferredHolder<Item, ? extends Item> itemEntry : CKUItems.ITEMS.getEntries()) {
+                        if (itemEntry.get() == blockItem) {
+                            alreadyListed = true;
+                            break;
+                        }
+                    }
+                    if (!alreadyListed) {
+                        output.accept(block);
+                    }
                 });
 //                Registration.ARMORS.getEntries().forEach(e -> {
 //                    Item item = e.get();
