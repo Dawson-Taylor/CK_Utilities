@@ -1,15 +1,38 @@
-Mod Information:
-=======
-This is just items that I would like to have in the game or have back in the game from previous mods.
+# CK Utilities
 
+CK Utilities is a NeoForge mod for Minecraft 26.2. It adds copper alloy tools and a few utility items I wanted in a survival world. The mod id is `ckutilities`. I maintain it. The license is MIT.
 
-Issues
-============
-If you find any issues with the mod, please report them on the project's GitHub issues page [here](https://github.com/Dawson-Taylor/CK_Utilities/issues)
+This branch is only for Minecraft 26.2. The Minecraft 1.21.1 line is the separate `1.21.1` branch and is not merged with this one.
 
-Additional Resources:
-==========
-I used a few other mods' source codes to write this mod. Here are the mods that helped and inspired me so far:
+## Items
 
-[JustDireThings](https://github.com/Direwolf20-MC/JustDireThings)
-[Actually Additions](https://github.com/Ellpeck/ActuallyAdditions)
+- Copper alloy ingot and copper alloy block
+- Copper alloy pickaxe, axe, shovel, and sword
+- Copper alloy hammer, which breaks a 3×3 area
+- Energy drill
+- Battery. It starts disabled. Sneak-right-click it to turn charging on.
+- Tiny coal
+
+Drill upgrades are included on this branch. Hold the drill in one hand and sneak-use an upgrade in the other. A matching or lower tier is not consumed.
+
+- Hammer size: 3×3, then 5×5, then 9×9
+- Efficiency I through V
+- Fortune I through III
+- Silk Touch
+- An upgrade template used to craft every upgrade. Each higher tier is crafted from the previous tier and a template. Fortune and Silk Touch cannot both be applied.
+
+## Building
+
+This branch targets Java 25.
+
+```
+./gradlew runClient
+```
+
+## Issues
+
+Please report problems on the [GitHub issues page](https://github.com/Dawson-Taylor/CK_Utilities/issues).
+
+## Inspiration
+
+[JustDireThings](https://github.com/Direwolf20-MC/JustDireThings) and [Actually Additions](https://github.com/Ellpeck/ActuallyAdditions), along with some of the items in those mods, were inspiration for this project.
