@@ -11,7 +11,40 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
+/**
+ * Power slot plus two charge slots. The machine face and the player inventory are separate windows.
+ * Slot positions include the empty gap between those windows. Energy transfer is unchanged.
+ */
 public class ChargerMenu extends AbstractContainerMenu {
+    /** Charger face, including its own top frame. The bottom cap is drawn by the screen. */
+    public static final int MACHINE_PANEL_WIDTH = 176;
+    public static final int MACHINE_FACE_HEIGHT = 59;
+    public static final int MACHINE_CAP_HEIGHT = 7;
+    public static final int MACHINE_PANEL_HEIGHT = MACHINE_FACE_HEIGHT + MACHINE_CAP_HEIGHT;
+    /** Empty space between the charger window and the inventory window. Not part of either texture. */
+    public static final int PANEL_GAP = 12;
+    /** Own bordered window for the normal 27+9 player inventory. */
+    public static final int INV_PANEL_WIDTH = 176;
+    public static final int INV_PANEL_HEIGHT = 101;
+    public static final int INV_PANEL_X = (MACHINE_PANEL_WIDTH - INV_PANEL_WIDTH) / 2;
+    public static final int INV_PANEL_Y = MACHINE_PANEL_HEIGHT + PANEL_GAP;
+
+    public static final int IMAGE_WIDTH = MACHINE_PANEL_WIDTH;
+    public static final int IMAGE_HEIGHT = INV_PANEL_Y + INV_PANEL_HEIGHT;
+
+    public static final int POWER_X = 44;
+    public static final int POWER_Y = 35;
+    public static final int CHARGE_X = 98;
+    public static final int CHARGE_Y = 35;
+    public static final int CHARGE_STEP = 18;
+
+    /** 8px inset inside the inventory panel, matching a vanilla inventory. */
+    public static final int PLAYER_X = INV_PANEL_X + 8;
+    public static final int PLAYER_INV_Y = INV_PANEL_Y + 18;
+    public static final int HOTBAR_Y = INV_PANEL_Y + 76;
+    public static final int INV_LABEL_X = INV_PANEL_X + 8;
+    public static final int INV_LABEL_Y = INV_PANEL_Y + 6;
+
     private static final int PLAYER_START = ChargerBlockEntity.SLOT_COUNT;
     private static final int HOTBAR_START = PLAYER_START + 27;
 
@@ -27,10 +60,10 @@ public class ChargerMenu extends AbstractContainerMenu {
         this.charger = charger;
         charger.startOpen(playerInventory.player);
 
-        this.addSlot(new RestrictedSlot(charger, ChargerBlockEntity.SLOT_POWER, 44, 35));
-        this.addSlot(new RestrictedSlot(charger, ChargerBlockEntity.SLOT_CHARGE_START, 98, 35));
-        this.addSlot(new RestrictedSlot(charger, ChargerBlockEntity.SLOT_CHARGE_START + 1, 116, 35));
-        this.addStandardInventorySlots(playerInventory, 8, 84);
+        this.addSlot(new RestrictedSlot(charger, ChargerBlockEntity.SLOT_POWER, POWER_X, POWER_Y));
+        this.addSlot(new RestrictedSlot(charger, ChargerBlockEntity.SLOT_CHARGE_START, CHARGE_X, CHARGE_Y));
+        this.addSlot(new RestrictedSlot(charger, ChargerBlockEntity.SLOT_CHARGE_START + 1, CHARGE_X + CHARGE_STEP, CHARGE_Y));
+        this.addStandardInventorySlots(playerInventory, PLAYER_X, PLAYER_INV_Y);
     }
 
     @Override
