@@ -9,32 +9,27 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 /**
- * Four upgrade slots in one row. An empty slot shows an emblem; a filled slot shows the upgrade item.
- * The window is the vanilla dispenser GUI, with a short gray band so the player inventory still lines up.
+ * Four upgrade slots in one row, each named underneath. Empty slots stay empty.
+ * The window is the vanilla dispenser GUI, widened so the names fit on one line.
  */
 public class DrillUpgradeScreen extends AbstractContainerScreen<DrillUpgradeMenu> {
     private static final Identifier DISPENSER = Identifier.withDefaultNamespace("textures/gui/container/dispenser.png");
-    private static final int BODY_TOP = 16;
-    private static final int INVENTORY_TOP = 50;
-    private static final int BODY_HEIGHT = INVENTORY_TOP - BODY_TOP;
-    private static final int IMAGE_WIDTH = 176;
-    private static final int IMAGE_HEIGHT = INVENTORY_TOP + 83;
+    private static final int IMAGE_WIDTH = 232;
+    private static final int IMAGE_HEIGHT = 152;
+    private static final int LABEL_Y = 39;
+    private static final int LABEL_COLOR = -12566464;
 
-    private static final int METAL = 0xFFC6C6C6;
-    private static final int METAL_DARK = 0xFF555555;
-    private static final int WOOD = 0xFF8B5A2B;
-    private static final int WOOD_DARK = 0xFF5C3A1E;
-    private static final int SPEED = 0xFFFFDD55;
-    private static final int GEM = 0xFF5CDBF0;
-    private static final int GEM_LIGHT = 0xFFD6FBFF;
-    private static final int GEM_DARK = 0xFF1A8FA3;
-    private static final int SILK = 0xFFF7F7FF;
-    private static final int SILK_EDGE = 0xFFB8B8D8;
-    private static final int SILK_THREAD = 0xFFD0D0EA;
+    private static final Component[] SLOT_LABELS = {
+            Component.translatable("container.ckutilities.drill_upgrades.hammer"),
+            Component.translatable("container.ckutilities.drill_upgrades.efficiency"),
+            Component.translatable("container.ckutilities.drill_upgrades.fortune"),
+            Component.translatable("container.ckutilities.drill_upgrades.silk_touch")
+    };
 
     public DrillUpgradeScreen(DrillUpgradeMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title, IMAGE_WIDTH, IMAGE_HEIGHT);
-        this.inventoryLabelY = INVENTORY_TOP - 11;
+        this.inventoryLabelX = DrillUpgradeMenu.PLAYER_X;
+        this.inventoryLabelY = DrillUpgradeMenu.PLAYER_INV_Y - 12;
     }
 
     @Override
@@ -42,78 +37,52 @@ public class DrillUpgradeScreen extends AbstractContainerScreen<DrillUpgradeMenu
         super.extractBackground(graphics, mouseX, mouseY, partialTick);
         int left = this.leftPos;
         int top = this.topPos;
-        graphics.blit(RenderPipelines.GUI_TEXTURED, DISPENSER, left, top, 0.0F, 0.0F, this.imageWidth, BODY_TOP, 256, 256);
-        for (int y = 0; y < BODY_HEIGHT; y++) {
-            graphics.blit(RenderPipelines.GUI_TEXTURED, DISPENSER, left, top + BODY_TOP + y, 0.0F, 8.0F, this.imageWidth, 1, 256, 256);
+        this.blitSlice(graphics, left, top, this.imageWidth, 0, 16);
+        int bodyBottom = top + this.imageHeight - 7;
+        for (int y = top + 16; y < bodyBottom; y++) {
+            this.blitSlice(graphics, left, y, this.imageWidth, 8, 1);
         }
-        graphics.blit(RenderPipelines.GUI_TEXTURED, DISPENSER, left, top + INVENTORY_TOP, 0.0F, 83.0F, this.imageWidth, 83, 256, 256);
+        this.blitSlice(graphics, left, bodyBottom, this.imageWidth, 159, 7);
 
         for (int i = 0; i < DrillUpgradeMenu.UPGRADE_SLOTS; i++) {
-            int x = left + DrillUpgradeMenu.upgradeX(i);
-            int y = top + DrillUpgradeMenu.UPGRADE_Y;
-            graphics.blit(RenderPipelines.GUI_TEXTURED, DISPENSER, x - 1, y - 1, 61.0F, 16.0F, 18, 18, 256, 256);
+            this.drawSlot(graphics, left + DrillUpgradeMenu.upgradeX(i), top + DrillUpgradeMenu.UPGRADE_Y);
         }
-
-        graphics.nextStratum();
-        for (int i = 0; i < DrillUpgradeMenu.UPGRADE_SLOTS; i++) {
-            if (this.menu.getSlot(i).hasItem()) {
-                continue;
+        for (int row = 0; row < 3; row++) {
+            for (int column = 0; column < 9; column++) {
+                this.drawSlot(graphics, left + DrillUpgradeMenu.PLAYER_X + column * 18, top + DrillUpgradeMenu.PLAYER_INV_Y + row * 18);
             }
-            int x = left + DrillUpgradeMenu.upgradeX(i);
-            int y = top + DrillUpgradeMenu.UPGRADE_Y;
-            switch (i) {
-                case DrillUpgradeMenu.SLOT_HAMMER -> this.drawHammer(graphics, x, y);
-                case DrillUpgradeMenu.SLOT_EFFICIENCY -> this.drawPickaxe(graphics, x, y);
-                case DrillUpgradeMenu.SLOT_FORTUNE -> this.drawGem(graphics, x, y);
-                case DrillUpgradeMenu.SLOT_SILK -> this.drawSilk(graphics, x, y);
-                default -> {
-                }
-            }
+        }
+        for (int column = 0; column < 9; column++) {
+            this.drawSlot(graphics, left + DrillUpgradeMenu.PLAYER_X + column * 18, top + DrillUpgradeMenu.HOTBAR_Y);
         }
     }
 
-    /** A hammer head over a short handle. */
-    private void drawHammer(GuiGraphicsExtractor graphics, int x, int y) {
-        graphics.fill(x + 1, y + 3, x + 15, y + 7, METAL);
-        graphics.fill(x + 1, y + 6, x + 15, y + 7, METAL_DARK);
-        graphics.fill(x + 6, y + 3, x + 10, y + 5, 0xFF8B8B8B);
-        graphics.fill(x + 7, y + 7, x + 9, y + 14, WOOD);
-        graphics.fill(x + 8, y + 7, x + 9, y + 14, WOOD_DARK);
+    @Override
+    protected void extractLabels(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+        super.extractLabels(graphics, mouseX, mouseY);
+        for (int i = 0; i < SLOT_LABELS.length; i++) {
+            Component label = SLOT_LABELS[i];
+            int center = DrillUpgradeMenu.upgradeX(i) + 8;
+            graphics.text(this.font, label, center - this.font.width(label) / 2, LABEL_Y, LABEL_COLOR, false);
+        }
     }
 
-    /** A pick head, a handle, and two speed marks. */
-    private void drawPickaxe(GuiGraphicsExtractor graphics, int x, int y) {
-        graphics.fill(x + 1, y + 2, x + 7, y + 4, METAL);
-        graphics.fill(x + 2, y + 4, x + 6, y + 6, METAL);
-        graphics.fill(x + 9, y + 2, x + 15, y + 4, METAL);
-        graphics.fill(x + 10, y + 4, x + 14, y + 6, METAL);
-        graphics.fill(x + 7, y + 5, x + 9, y + 14, WOOD);
-        graphics.fill(x + 8, y + 5, x + 9, y + 14, WOOD_DARK);
-        graphics.fill(x + 11, y + 9, x + 15, y + 10, SPEED);
-        graphics.fill(x + 12, y + 12, x + 15, y + 13, SPEED);
+    /** One dispenser slot, drawn at the item position. Nothing is painted inside it. */
+    private void drawSlot(GuiGraphicsExtractor graphics, int itemX, int itemY) {
+        graphics.blit(RenderPipelines.GUI_TEXTURED, DISPENSER, itemX - 1, itemY - 1, 61.0F, 16.0F, 18, 18, 256, 256);
     }
 
-    /** A faceted gem. */
-    private void drawGem(GuiGraphicsExtractor graphics, int x, int y) {
-        graphics.fill(x + 7, y + 1, x + 9, y + 3, GEM);
-        graphics.fill(x + 5, y + 3, x + 11, y + 5, GEM);
-        graphics.fill(x + 3, y + 5, x + 13, y + 8, GEM);
-        graphics.fill(x + 5, y + 8, x + 11, y + 11, GEM);
-        graphics.fill(x + 7, y + 11, x + 9, y + 14, GEM);
-        graphics.fill(x + 6, y + 4, x + 8, y + 6, GEM_LIGHT);
-        graphics.fill(x + 8, y + 8, x + 11, y + 10, GEM_DARK);
-    }
-
-    /** A pale square with a woven thread. */
-    private void drawSilk(GuiGraphicsExtractor graphics, int x, int y) {
-        graphics.fill(x + 2, y + 2, x + 14, y + 14, SILK);
-        graphics.fill(x + 2, y + 2, x + 14, y + 3, SILK_EDGE);
-        graphics.fill(x + 2, y + 13, x + 14, y + 14, SILK_EDGE);
-        graphics.fill(x + 2, y + 2, x + 3, y + 14, SILK_EDGE);
-        graphics.fill(x + 13, y + 2, x + 14, y + 14, SILK_EDGE);
-        graphics.fill(x + 4, y + 6, x + 12, y + 7, SILK_THREAD);
-        graphics.fill(x + 4, y + 9, x + 12, y + 10, SILK_THREAD);
-        graphics.fill(x + 6, y + 4, x + 7, y + 12, SILK_THREAD);
-        graphics.fill(x + 9, y + 4, x + 10, y + 12, SILK_THREAD);
+    /** Left and right bevels stay put. The gray middle is repeated so the window can be wider than the texture. */
+    private void blitSlice(GuiGraphicsExtractor graphics, int x, int y, int width, int srcV, int srcH) {
+        int cap = 4;
+        graphics.blit(RenderPipelines.GUI_TEXTURED, DISPENSER, x, y, 0.0F, srcV, cap, srcH, 256, 256);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, DISPENSER, x + width - cap, y, 172.0F, srcV, cap, srcH, 256, 256);
+        int filled = cap;
+        int end = width - cap;
+        while (filled < end) {
+            int chunk = Math.min(168, end - filled);
+            graphics.blit(RenderPipelines.GUI_TEXTURED, DISPENSER, x + filled, y, 4.0F, srcV, chunk, srcH, 256, 256);
+            filled += chunk;
+        }
     }
 }

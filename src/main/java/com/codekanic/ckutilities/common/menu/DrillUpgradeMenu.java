@@ -24,11 +24,12 @@ public class DrillUpgradeMenu extends AbstractContainerMenu {
     public static final int SLOT_SILK = 3;
 
     /** Item position of the first upgrade slot. The screen draws the 18x18 widget one pixel up and left. */
-    public static final int UPGRADE_X = 44;
-    public static final int UPGRADE_Y = 18;
-    public static final int UPGRADE_STEP = 24;
-    public static final int PLAYER_INV_Y = 51;
-    public static final int HOTBAR_Y = 109;
+    public static final int UPGRADE_X = 27;
+    public static final int UPGRADE_Y = 20;
+    public static final int UPGRADE_STEP = 52;
+    public static final int PLAYER_X = 36;
+    public static final int PLAYER_INV_Y = 63;
+    public static final int HOTBAR_Y = 121;
 
     public static int upgradeX(int index) {
         return UPGRADE_X + index * UPGRADE_STEP;
@@ -67,11 +68,11 @@ public class DrillUpgradeMenu extends AbstractContainerMenu {
 
         for (int row = 0; row < 3; row++) {
             for (int column = 0; column < 9; column++) {
-                this.addSlot(new Slot(playerInventory, column + row * 9 + 9, 8 + column * 18, PLAYER_INV_Y + row * 18));
+                this.addSlot(new Slot(playerInventory, column + row * 9 + 9, PLAYER_X + column * 18, PLAYER_INV_Y + row * 18));
             }
         }
         for (int column = 0; column < 9; column++) {
-            this.addSlot(new Slot(playerInventory, column, 8 + column * 18, HOTBAR_Y));
+            this.addSlot(new Slot(playerInventory, column, PLAYER_X + column * 18, HOTBAR_Y));
         }
 
     }
