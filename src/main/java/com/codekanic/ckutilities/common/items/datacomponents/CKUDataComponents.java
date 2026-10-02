@@ -3,6 +3,7 @@ package com.codekanic.ckutilities.common.items.datacomponents;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentType;
+import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.neoforged.bus.api.IEventBus;
@@ -30,6 +31,13 @@ public class CKUDataComponents {
             DataComponentType.<Boolean>builder()
                     .persistent(Codec.BOOL)
                     .networkSynchronized(ByteBufCodecs.BOOL)
+                    .build());
+
+    /** Upgrade items currently inserted into a copper alloy drill. */
+    public static final Supplier<DataComponentType<ItemContainerContents>> DRILL_UPGRADES = REGISTRAR.register("drill_upgrades", () ->
+            DataComponentType.<ItemContainerContents>builder()
+                    .persistent(ItemContainerContents.CODEC)
+                    .networkSynchronized(ItemContainerContents.STREAM_CODEC)
                     .build());
 
     /** Hammer break radius on a drill. 1, 2, and 4 are the 3x3, 5x5, and 9x9 upgrades. */
