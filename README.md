@@ -13,13 +13,13 @@ This branch is only for Minecraft 1.21.1. Newer work for Minecraft 26.2 lives on
 - Battery. It starts disabled. Sneak-right-click it to turn charging on.
 - Tiny coal
 
-## Building
+## Installing
 
-This branch targets Java 21.
+This mod is meant to be added to a CurseForge (or other launcher) instance for its Minecraft version. This line is Minecraft 1.21.1 with NeoForge.
 
-```
-./gradlew runClient
-```
+There is no CurseForge release yet.
+
+Developers can build the source with `./gradlew runClient` on Java 21.
 
 ## Issues
 
