@@ -2,13 +2,17 @@ package com.codekanic.ckutilities.common.items.custom;
 
 import com.codekanic.ckutilities.common.items.CKUTags;
 import com.codekanic.ckutilities.common.items.baseitems.ItemEnergy;
+import com.codekanic.ckutilities.common.items.datacomponents.CKUDataComponents;
 import com.codekanic.ckutilities.common.items.utils.ToolTier;
 import com.codekanic.ckutilities.common.items.utils.Util;
 import com.codekanic.ckutilities.common.items.utils.WorldUtil;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Unit;
 import net.minecraft.world.entity.EquipmentSlotGroup;
@@ -16,8 +20,11 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.component.Tool;
+import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -25,6 +32,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class DrillItem extends ItemEnergy {
     private static final int ENERGY_USE = 300;
@@ -37,7 +45,8 @@ public class DrillItem extends ItemEnergy {
         super(properties
                         .stacksTo(1)
                         .component(DataComponents.UNBREAKABLE, Unit.INSTANCE)
-                        .component(DataComponents.TOOL, drillTool()),
+                        .component(DataComponents.TOOL, drillTool())
+                        .component(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY),
                 250000, 1000);
 
         attributesUnpowered = attributes(0.1F);
@@ -79,9 +88,30 @@ public class DrillItem extends ItemEnergy {
             if (!(ray instanceof BlockHitResult)) {
                 return false;
             }
-            return breakBlock(stack, player.level(), pos, player);
+            boolean brokeCenter = breakBlock(stack, player.level(), pos, player, false);
+            if (brokeCenter) {
+                breakHammerArea(stack, pos, player);
+            }
+            return brokeCenter;
         } finally {
             BREAKING.set(Boolean.FALSE);
+        }
+    }
+
+    /**
+     * Breaks the hammer square around the block that was just mined.
+     * The center is skipped so it is not dropped twice. Radius 1, 2, and 4 are 3x3, 5x5, and 9x9.
+     */
+    private void breakHammerArea(ItemStack stack, BlockPos origin, Player player) {
+        int radius = stack.getOrDefault(CKUDataComponents.HAMMER_RADIUS.get(), 0);
+        if (radius <= 0 || !(player instanceof ServerPlayer serverPlayer)) {
+            return;
+        }
+        for (BlockPos extra : HammerItem.getBlocksToBeDestroyed(radius, origin, serverPlayer)) {
+            if (extra.equals(origin)) {
+                continue;
+            }
+            breakBlock(stack, player.level(), extra, player, true);
         }
     }
 
@@ -95,9 +125,14 @@ public class DrillItem extends ItemEnergy {
     }
 
     public boolean breakBlock(ItemStack stack, Level world, BlockPos pos, Player player) {
+        return breakBlock(stack, world, pos, player, false);
+    }
+
+    private boolean breakBlock(ItemStack stack, Level world, BlockPos pos, Player player, boolean extra) {
         int use = this.getEnergyUsePerBlock(stack);
+        // Creative players still need a charge to run the drill, but tryHarvestBlock does not deduct it.
         if (this.getEnergyStored(stack) >= use) {
-            return this.tryHarvestBlock(world, pos, false, stack, player, use);
+            return this.tryHarvestBlock(world, pos, extra, stack, player, use);
         }
         return false;
     }
@@ -119,5 +154,20 @@ public class DrillItem extends ItemEnergy {
     @Override
     public boolean shouldCauseBlockBreakReset(ItemStack oldStack, ItemStack newStack) {
         return !ItemStack.isSameItem(newStack, oldStack);
+    }
+
+    @Override
+    public boolean isFoil(ItemStack stack) {
+        return stack.isEnchanted() || stack.getOrDefault(CKUDataComponents.HAMMER_RADIUS.get(), 0) > 0;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) {
+        super.appendHoverText(stack, context, display, tooltip, flag);
+        int radius = stack.getOrDefault(CKUDataComponents.HAMMER_RADIUS.get(), 0);
+        if (radius > 0) {
+            int size = radius * 2 + 1;
+            tooltip.accept(Component.translatable("tooltip.ckutilities.drill.hammer", size, size).withStyle(ChatFormatting.GOLD));
+        }
     }
 }

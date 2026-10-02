@@ -33,6 +33,20 @@ public class CKUModelProvider extends ModelProvider {
         itemModels.generateFlatItem(CKUItems.COPPER_ALLOY_HAMMER.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(CKUItems.COPPER_ALLOY_DRILL.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(CKUItems.BATTERY.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+
+        itemModels.generateFlatItem(CKUItems.UPGRADE_TEMPLATE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(CKUItems.HAMMER_UPGRADE_3X3.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(CKUItems.HAMMER_UPGRADE_5X5.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(CKUItems.HAMMER_UPGRADE_9X9.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(CKUItems.EFFICIENCY_UPGRADE_1.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(CKUItems.EFFICIENCY_UPGRADE_2.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(CKUItems.EFFICIENCY_UPGRADE_3.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(CKUItems.EFFICIENCY_UPGRADE_4.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(CKUItems.EFFICIENCY_UPGRADE_5.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(CKUItems.FORTUNE_UPGRADE_1.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(CKUItems.FORTUNE_UPGRADE_2.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(CKUItems.FORTUNE_UPGRADE_3.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(CKUItems.SILK_TOUCH_UPGRADE.get(), ModelTemplates.FLAT_ITEM);
     }
 
     @Override

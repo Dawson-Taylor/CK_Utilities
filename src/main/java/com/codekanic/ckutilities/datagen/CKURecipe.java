@@ -7,6 +7,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
 import java.util.concurrent.CompletableFuture;
@@ -120,6 +121,73 @@ public class CKURecipe extends RecipeProvider {
                 .define('D', Items.DIAMOND)
                 .group("ckutilities")
                 .unlockedBy("has_copper_alloy_ingot", has(CKUItems.COPPER_ALLOY_INGOT))
+                .save(output);
+
+        shaped(RecipeCategory.MISC, CKUItems.UPGRADE_TEMPLATE.get())
+                .pattern("C C")
+                .pattern(" D ")
+                .pattern("C C")
+                .define('C', CKUItems.COPPER_ALLOY_INGOT)
+                .define('D', Items.DIAMOND)
+                .group("ckutilities")
+                .unlockedBy("has_copper_alloy_ingot", has(CKUItems.COPPER_ALLOY_INGOT))
+                .save(output);
+        shaped(RecipeCategory.MISC, CKUItems.HAMMER_UPGRADE_3X3.get())
+                .pattern("CCC")
+                .pattern(" T ")
+                .pattern(" S ")
+                .define('C', CKUItems.COPPER_ALLOY_INGOT)
+                .define('T', CKUItems.UPGRADE_TEMPLATE)
+                .define('S', Items.STICK)
+                .group("ckutilities")
+                .unlockedBy("has_upgrade_template", has(CKUItems.UPGRADE_TEMPLATE))
+                .save(output);
+        nextTier(CKUItems.HAMMER_UPGRADE_5X5.get(), CKUItems.HAMMER_UPGRADE_3X3.get());
+        nextTier(CKUItems.HAMMER_UPGRADE_9X9.get(), CKUItems.HAMMER_UPGRADE_5X5.get());
+
+        shaped(RecipeCategory.MISC, CKUItems.EFFICIENCY_UPGRADE_1.get())
+                .pattern(" R ")
+                .pattern(" T ")
+                .define('R', Items.REDSTONE)
+                .define('T', CKUItems.UPGRADE_TEMPLATE)
+                .group("ckutilities")
+                .unlockedBy("has_upgrade_template", has(CKUItems.UPGRADE_TEMPLATE))
+                .save(output);
+        nextTier(CKUItems.EFFICIENCY_UPGRADE_2.get(), CKUItems.EFFICIENCY_UPGRADE_1.get());
+        nextTier(CKUItems.EFFICIENCY_UPGRADE_3.get(), CKUItems.EFFICIENCY_UPGRADE_2.get());
+        nextTier(CKUItems.EFFICIENCY_UPGRADE_4.get(), CKUItems.EFFICIENCY_UPGRADE_3.get());
+        nextTier(CKUItems.EFFICIENCY_UPGRADE_5.get(), CKUItems.EFFICIENCY_UPGRADE_4.get());
+
+        shaped(RecipeCategory.MISC, CKUItems.FORTUNE_UPGRADE_1.get())
+                .pattern(" L ")
+                .pattern(" T ")
+                .define('L', Items.LAPIS_LAZULI)
+                .define('T', CKUItems.UPGRADE_TEMPLATE)
+                .group("ckutilities")
+                .unlockedBy("has_upgrade_template", has(CKUItems.UPGRADE_TEMPLATE))
+                .save(output);
+        nextTier(CKUItems.FORTUNE_UPGRADE_2.get(), CKUItems.FORTUNE_UPGRADE_1.get());
+        nextTier(CKUItems.FORTUNE_UPGRADE_3.get(), CKUItems.FORTUNE_UPGRADE_2.get());
+
+        shaped(RecipeCategory.MISC, CKUItems.SILK_TOUCH_UPGRADE.get())
+                .pattern(" E ")
+                .pattern(" T ")
+                .define('E', Items.EMERALD)
+                .define('T', CKUItems.UPGRADE_TEMPLATE)
+                .group("ckutilities")
+                .unlockedBy("has_upgrade_template", has(CKUItems.UPGRADE_TEMPLATE))
+                .save(output);
+    }
+
+    /** One upgrade template above the previous tier. */
+    private void nextTier(Item result, Item previous) {
+        shaped(RecipeCategory.MISC, result)
+                .pattern(" T ")
+                .pattern(" P ")
+                .define('T', CKUItems.UPGRADE_TEMPLATE)
+                .define('P', previous)
+                .group("ckutilities")
+                .unlockedBy("has_upgrade_template", has(CKUItems.UPGRADE_TEMPLATE))
                 .save(output);
     }
 

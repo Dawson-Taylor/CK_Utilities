@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ckutilities:efficiency_upgrade_2"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_upgrade_template": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ckutilities:upgrade_template"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_upgrade_template"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ckutilities:efficiency_upgrade_2"
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ckutilities",
+  "key": {
+    "C": "ckutilities:copper_alloy_ingot",
+    "D": "minecraft:diamond"
+  },
+  "pattern": [
+    "C C",
+    " D ",
+    "C C"
+  ],
+  "result": {
+    "id": "ckutilities:upgrade_template"
+  }
+}

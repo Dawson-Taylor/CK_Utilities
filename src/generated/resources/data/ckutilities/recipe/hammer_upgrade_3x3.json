@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ckutilities",
+  "key": {
+    "C": "ckutilities:copper_alloy_ingot",
+    "S": "minecraft:stick",
+    "T": "ckutilities:upgrade_template"
+  },
+  "pattern": [
+    "CCC",
+    " T ",
+    " S "
+  ],
+  "result": {
+    "id": "ckutilities:hammer_upgrade_3x3"
+  }
+}
