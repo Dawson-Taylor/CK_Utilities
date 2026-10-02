@@ -15,6 +15,7 @@ import java.util.List;
 /**
  * Four upgrade slots stored on the copper alloy drill. Items move in and out; nothing is consumed.
  * Fortune and silk touch cannot be inserted together. A filled slot must be emptied before a different item goes in.
+ * The player inventory is not shown. Its slots stay in the menu so a click can move an upgrade to or from the hotbar.
  */
 public class DrillUpgradeMenu extends AbstractContainerMenu {
     public static final int UPGRADE_SLOTS = 4;
@@ -27,17 +28,16 @@ public class DrillUpgradeMenu extends AbstractContainerMenu {
     public static final int UPGRADE_X = 27;
     public static final int UPGRADE_Y = 20;
     public static final int UPGRADE_STEP = 52;
-    public static final int PLAYER_X = 36;
-    public static final int PLAYER_INV_Y = 63;
-    public static final int HOTBAR_Y = 121;
 
     public static int upgradeX(int index) {
         return UPGRADE_X + index * UPGRADE_STEP;
     }
 
-    private static final int PLAYER_START = UPGRADE_SLOTS;
-    private static final int HOTBAR_START = PLAYER_START + 27;
+    /** Hotbar slots are first so a returned upgrade prefers the hotbar over the rest of the inventory. */
+    public static final int HOTBAR_START = UPGRADE_SLOTS;
     private static final int HOTBAR_END = HOTBAR_START + 9;
+    private static final int INV_START = HOTBAR_END;
+    private static final int INV_END = INV_START + 27;
 
     private final Player player;
     private final ItemStack drill;
@@ -65,16 +65,19 @@ public class DrillUpgradeMenu extends AbstractContainerMenu {
         UpgradeSlot silk = this.addUpgradeSlot(SLOT_SILK, DrillUpgradeItem.Kind.SILK_TOUCH);
         fortune.blockedBy = silk;
         silk.blockedBy = fortune;
+        this.addHiddenPlayerSlots(playerInventory);
+    }
 
+    /** Present for item movement only. The popup does not draw these. */
+    private void addHiddenPlayerSlots(Inventory playerInventory) {
+        for (int column = 0; column < 9; column++) {
+            this.addSlot(new HiddenSlot(playerInventory, column));
+        }
         for (int row = 0; row < 3; row++) {
             for (int column = 0; column < 9; column++) {
-                this.addSlot(new Slot(playerInventory, column + row * 9 + 9, PLAYER_X + column * 18, PLAYER_INV_Y + row * 18));
+                this.addSlot(new HiddenSlot(playerInventory, column + row * 9 + 9));
             }
         }
-        for (int column = 0; column < 9; column++) {
-            this.addSlot(new Slot(playerInventory, column, PLAYER_X + column * 18, HOTBAR_Y));
-        }
-
     }
 
     private UpgradeSlot addUpgradeSlot(int index, DrillUpgradeItem.Kind kind) {
@@ -144,17 +147,12 @@ public class DrillUpgradeMenu extends AbstractContainerMenu {
         ItemStack stack = slot.getItem();
         ItemStack original = stack.copy();
         if (index < UPGRADE_SLOTS) {
-            if (!this.moveItemStackTo(stack, PLAYER_START, HOTBAR_END, true)) {
+            if (!this.moveItemStackTo(stack, HOTBAR_START, HOTBAR_END, false)
+                    && !this.moveItemStackTo(stack, INV_START, INV_END, false)) {
                 return ItemStack.EMPTY;
             }
         } else if (!this.moveItemStackTo(stack, 0, UPGRADE_SLOTS, false)) {
-            if (index < HOTBAR_START) {
-                if (!this.moveItemStackTo(stack, HOTBAR_START, HOTBAR_END, false)) {
-                    return ItemStack.EMPTY;
-                }
-            } else if (!this.moveItemStackTo(stack, PLAYER_START, HOTBAR_START, false)) {
-                return ItemStack.EMPTY;
-            }
+            return ItemStack.EMPTY;
         }
         if (stack.isEmpty()) {
             slot.set(ItemStack.EMPTY);
@@ -184,6 +182,18 @@ public class DrillUpgradeMenu extends AbstractContainerMenu {
         public void setChanged() {
             super.setChanged();
             DrillUpgradeMenu.this.save();
+        }
+    }
+
+    /** Not drawn and not hovered. Clicks are sent here when the player clicks the real hotbar. */
+    private static final class HiddenSlot extends Slot {
+        private HiddenSlot(Inventory inventory, int index) {
+            super(inventory, index, 0, 0);
+        }
+
+        @Override
+        public boolean isActive() {
+            return false;
         }
     }
 
