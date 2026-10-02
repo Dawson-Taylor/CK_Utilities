@@ -3,23 +3,18 @@ package com.codekanic.ckutilities.client;
 import com.codekanic.ckutilities.common.menu.DrillUpgradeMenu;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.ContainerInput;
-import net.minecraft.world.inventory.Slot;
 
 /**
- * A small popup with four named upgrade slots in one row.
- * The player inventory is not part of this window. Click an upgrade on the hotbar to insert it,
- * and click a filled slot to send that upgrade back to the hotbar.
+ * Two separate windows. The top one is titled "Drill Upgrades" and holds the four named slots.
+ * The player inventory is its own window underneath, with a clear gap so the panels are not one GUI.
+ * Clicks and shift-clicks use the normal container slots.
  */
 public class DrillUpgradeScreen extends AbstractContainerScreen<DrillUpgradeMenu> {
     private static final Identifier DISPENSER = Identifier.withDefaultNamespace("textures/gui/container/dispenser.png");
-    private static final int IMAGE_WIDTH = 232;
-    private static final int IMAGE_HEIGHT = 58;
     private static final int LABEL_Y = 39;
     private static final int LABEL_COLOR = -12566464;
 
@@ -31,35 +26,37 @@ public class DrillUpgradeScreen extends AbstractContainerScreen<DrillUpgradeMenu
     };
 
     public DrillUpgradeScreen(DrillUpgradeMenu menu, Inventory playerInventory, Component title) {
-        super(menu, playerInventory, title, IMAGE_WIDTH, IMAGE_HEIGHT);
-    }
-
-    @Override
-    protected void init() {
-        super.init();
-        // Above the crosshair, clear of the hotbar, so this reads as a popup.
-        this.topPos = Math.max(8, this.height / 2 - this.imageHeight - 12);
+        super(menu, playerInventory, title, DrillUpgradeMenu.IMAGE_WIDTH, DrillUpgradeMenu.IMAGE_HEIGHT);
+        this.inventoryLabelX = DrillUpgradeMenu.INV_LABEL_X;
+        this.inventoryLabelY = DrillUpgradeMenu.INV_LABEL_Y;
     }
 
     @Override
     public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+        super.extractBackground(graphics, mouseX, mouseY, partialTick);
         int left = this.leftPos;
         int top = this.topPos;
-        this.blitSlice(graphics, left, top, this.imageWidth, 0, 16);
-        int bodyBottom = top + this.imageHeight - 7;
-        for (int y = top + 16; y < bodyBottom; y++) {
-            this.blitSlice(graphics, left, y, this.imageWidth, 8, 1);
-        }
-        this.blitSlice(graphics, left, bodyBottom, this.imageWidth, 159, 7);
+        this.drawPanel(graphics, left, top, DrillUpgradeMenu.UPGRADE_PANEL_WIDTH, DrillUpgradeMenu.UPGRADE_PANEL_HEIGHT);
+        int inventoryLeft = left + DrillUpgradeMenu.INV_PANEL_X;
+        int inventoryTop = top + DrillUpgradeMenu.INV_PANEL_Y;
+        this.drawPanel(graphics, inventoryLeft, inventoryTop, DrillUpgradeMenu.INV_PANEL_WIDTH, DrillUpgradeMenu.INV_PANEL_HEIGHT);
 
         for (int i = 0; i < DrillUpgradeMenu.UPGRADE_SLOTS; i++) {
             this.drawSlot(graphics, left + DrillUpgradeMenu.upgradeX(i), top + DrillUpgradeMenu.UPGRADE_Y);
+        }
+        for (int row = 0; row < 3; row++) {
+            for (int column = 0; column < 9; column++) {
+                this.drawSlot(graphics, left + DrillUpgradeMenu.PLAYER_X + column * 18, top + DrillUpgradeMenu.PLAYER_INV_Y + row * 18);
+            }
+        }
+        for (int column = 0; column < 9; column++) {
+            this.drawSlot(graphics, left + DrillUpgradeMenu.PLAYER_X + column * 18, top + DrillUpgradeMenu.HOTBAR_Y);
         }
     }
 
     @Override
     protected void extractLabels(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
-        graphics.text(this.font, this.title, this.titleLabelX, this.titleLabelY, LABEL_COLOR, false);
+        super.extractLabels(graphics, mouseX, mouseY);
         for (int i = 0; i < SLOT_LABELS.length; i++) {
             Component label = SLOT_LABELS[i];
             int center = DrillUpgradeMenu.upgradeX(i) + 8;
@@ -67,57 +64,19 @@ public class DrillUpgradeScreen extends AbstractContainerScreen<DrillUpgradeMenu
         }
     }
 
-    /**
-     * Left click on a filled slot returns it to the hotbar. Left click on a hotbar upgrade inserts it.
-     * Other clicks are ignored so items are never picked up onto the cursor.
-     */
-    @Override
-    public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
-        if (event.button() != 0) {
-            return true;
-        }
-        Slot upgrade = this.upgradeSlotAt(event.x(), event.y());
-        if (upgrade != null) {
-            if (upgrade.hasItem()) {
-                this.slotClicked(upgrade, upgrade.index, 0, ContainerInput.QUICK_MOVE);
-            }
-            return true;
-        }
-        int hotbar = this.hotbarIndexAt(event.x(), event.y());
-        if (hotbar >= 0) {
-            Slot slot = this.menu.getSlot(DrillUpgradeMenu.HOTBAR_START + hotbar);
-            if (slot.hasItem()) {
-                this.slotClicked(slot, slot.index, 0, ContainerInput.QUICK_MOVE);
-            }
-        }
-        return true;
-    }
-
-    private Slot upgradeSlotAt(double mouseX, double mouseY) {
-        for (int i = 0; i < DrillUpgradeMenu.UPGRADE_SLOTS; i++) {
-            Slot slot = this.menu.getSlot(i);
-            if (this.isHovering(slot.x, slot.y, 16, 16, mouseX, mouseY)) {
-                return slot;
-            }
-        }
-        return null;
-    }
-
-    /** Same layout as the HUD hotbar: 182 pixels wide, sitting on the bottom of the screen. */
-    private int hotbarIndexAt(double mouseX, double mouseY) {
-        if (mouseY < this.height - 22 || mouseY >= this.height) {
-            return -1;
-        }
-        double local = mouseX - (this.width / 2 - 91);
-        if (local < 0 || local >= 182) {
-            return -1;
-        }
-        return (int) (local / 20);
-    }
-
     /** One dispenser slot, drawn at the item position. Nothing is painted inside it. */
     private void drawSlot(GuiGraphicsExtractor graphics, int itemX, int itemY) {
         graphics.blit(RenderPipelines.GUI_TEXTURED, DISPENSER, itemX - 1, itemY - 1, 61.0F, 16.0F, 18, 18, 256, 256);
+    }
+
+    /** A complete window: top cap, stretched body, bottom cap. Drawn on its own, not as part of the other panel. */
+    private void drawPanel(GuiGraphicsExtractor graphics, int x, int y, int width, int height) {
+        this.blitSlice(graphics, x, y, width, 0, 16);
+        int bodyBottom = y + height - 7;
+        for (int row = y + 16; row < bodyBottom; row++) {
+            this.blitSlice(graphics, x, row, width, 8, 1);
+        }
+        this.blitSlice(graphics, x, bodyBottom, width, 159, 7);
     }
 
     /** Left and right bevels stay put. The gray middle is repeated so the window can be wider than the texture. */
