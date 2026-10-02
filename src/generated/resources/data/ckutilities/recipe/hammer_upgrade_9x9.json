@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ckutilities",
+  "key": {
+    "P": "ckutilities:hammer_upgrade_5x5",
+    "T": "ckutilities:upgrade_template"
+  },
+  "pattern": [
+    " T ",
+    " P "
+  ],
+  "result": {
+    "id": "ckutilities:hammer_upgrade_9x9"
+  }
+}

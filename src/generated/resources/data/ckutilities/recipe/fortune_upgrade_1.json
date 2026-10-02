@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ckutilities",
+  "key": {
+    "L": "minecraft:lapis_lazuli",
+    "T": "ckutilities:upgrade_template"
+  },
+  "pattern": [
+    " L ",
+    " T "
+  ],
+  "result": {
+    "id": "ckutilities:fortune_upgrade_1"
+  }
+}

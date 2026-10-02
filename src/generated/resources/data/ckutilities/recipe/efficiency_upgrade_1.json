@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ckutilities",
+  "key": {
+    "R": "minecraft:redstone",
+    "T": "ckutilities:upgrade_template"
+  },
+  "pattern": [
+    " R ",
+    " T "
+  ],
+  "result": {
+    "id": "ckutilities:efficiency_upgrade_1"
+  }
+}

@@ -4,6 +4,7 @@ import com.codekanic.ckutilities.CKUtilities;
 import com.codekanic.ckutilities.common.items.baseitems.ItemEnergy;
 import com.codekanic.ckutilities.common.items.custom.BatteryItem;
 import com.codekanic.ckutilities.common.items.custom.DrillItem;
+import com.codekanic.ckutilities.common.items.custom.DrillUpgradeItem;
 import com.codekanic.ckutilities.common.items.custom.FuelItem;
 import com.codekanic.ckutilities.common.items.custom.HammerItem;
 import com.codekanic.ckutilities.common.items.datacomponents.CKUDataComponents;
@@ -39,6 +40,24 @@ public class CKUItems {
             properties -> new BatteryItem(properties, 200000, 1000));
     public static final DeferredItem<Item> TINY_COAL = ITEMS.registerItem("tiny_coal",
             properties -> new FuelItem(properties, 200));
+
+    public static final DeferredItem<Item> UPGRADE_TEMPLATE = ITEMS.registerSimpleItem("upgrade_template");
+    public static final DeferredItem<DrillUpgradeItem> HAMMER_UPGRADE_3X3 = registerUpgrade("hammer_upgrade_3x3", DrillUpgradeItem.Kind.HAMMER, 1);
+    public static final DeferredItem<DrillUpgradeItem> HAMMER_UPGRADE_5X5 = registerUpgrade("hammer_upgrade_5x5", DrillUpgradeItem.Kind.HAMMER, 2);
+    public static final DeferredItem<DrillUpgradeItem> HAMMER_UPGRADE_9X9 = registerUpgrade("hammer_upgrade_9x9", DrillUpgradeItem.Kind.HAMMER, 4);
+    public static final DeferredItem<DrillUpgradeItem> EFFICIENCY_UPGRADE_1 = registerUpgrade("efficiency_upgrade_1", DrillUpgradeItem.Kind.EFFICIENCY, 1);
+    public static final DeferredItem<DrillUpgradeItem> EFFICIENCY_UPGRADE_2 = registerUpgrade("efficiency_upgrade_2", DrillUpgradeItem.Kind.EFFICIENCY, 2);
+    public static final DeferredItem<DrillUpgradeItem> EFFICIENCY_UPGRADE_3 = registerUpgrade("efficiency_upgrade_3", DrillUpgradeItem.Kind.EFFICIENCY, 3);
+    public static final DeferredItem<DrillUpgradeItem> EFFICIENCY_UPGRADE_4 = registerUpgrade("efficiency_upgrade_4", DrillUpgradeItem.Kind.EFFICIENCY, 4);
+    public static final DeferredItem<DrillUpgradeItem> EFFICIENCY_UPGRADE_5 = registerUpgrade("efficiency_upgrade_5", DrillUpgradeItem.Kind.EFFICIENCY, 5);
+    public static final DeferredItem<DrillUpgradeItem> FORTUNE_UPGRADE_1 = registerUpgrade("fortune_upgrade_1", DrillUpgradeItem.Kind.FORTUNE, 1);
+    public static final DeferredItem<DrillUpgradeItem> FORTUNE_UPGRADE_2 = registerUpgrade("fortune_upgrade_2", DrillUpgradeItem.Kind.FORTUNE, 2);
+    public static final DeferredItem<DrillUpgradeItem> FORTUNE_UPGRADE_3 = registerUpgrade("fortune_upgrade_3", DrillUpgradeItem.Kind.FORTUNE, 3);
+    public static final DeferredItem<DrillUpgradeItem> SILK_TOUCH_UPGRADE = registerUpgrade("silk_touch_upgrade", DrillUpgradeItem.Kind.SILK_TOUCH, 1);
+
+    private static DeferredItem<DrillUpgradeItem> registerUpgrade(String name, DrillUpgradeItem.Kind kind, int tier) {
+        return ITEMS.registerItem(name, properties -> new DrillUpgradeItem(properties, kind, tier));
+    }
 
     public static Item.Properties defaultProps() {
         return new Item.Properties();

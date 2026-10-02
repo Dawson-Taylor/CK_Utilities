@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ckutilities",
+  "key": {
+    "P": "ckutilities:efficiency_upgrade_2",
+    "T": "ckutilities:upgrade_template"
+  },
+  "pattern": [
+    " T ",
+    " P "
+  ],
+  "result": {
+    "id": "ckutilities:efficiency_upgrade_3"
+  }
+}

@@ -32,6 +32,13 @@ public class CKUDataComponents {
                     .networkSynchronized(ByteBufCodecs.BOOL)
                     .build());
 
+    /** Hammer break radius on a drill. 1, 2, and 4 are the 3x3, 5x5, and 9x9 upgrades. */
+    public static final Supplier<DataComponentType<Integer>> HAMMER_RADIUS = REGISTRAR.register("hammer_radius", () ->
+            DataComponentType.<Integer>builder()
+                    .persistent(Codec.INT)
+                    .networkSynchronized(ByteBufCodecs.INT)
+                    .build());
+
     private static <T> DeferredHolder<DataComponentType<?>, DataComponentType<T>> register(UnaryOperator<DataComponentType.Builder<T>> builderOperator) {
         return REGISTRAR.register("coordinates", () -> builderOperator.apply(DataComponentType.builder()).build());
     }
