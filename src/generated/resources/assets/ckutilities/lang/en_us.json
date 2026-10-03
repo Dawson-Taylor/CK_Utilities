@@ -30,11 +30,14 @@
   "tooltip.ckutilities.battery.changeMode": "Sneak + right click to toggle inventory charging",
   "tooltip.ckutilities.battery.discharge": "Charging items in inventory",
   "tooltip.ckutilities.battery.noDischarge": "Not charging items in inventory",
+  "container.ckutilities.drill_upgrades": "Drill Upgrades",
+  "container.ckutilities.drill_upgrades.efficiency": "Efficiency",
+  "container.ckutilities.drill_upgrades.fortune": "Fortune",
+  "container.ckutilities.drill_upgrades.hammer": "Hammer",
+  "container.ckutilities.drill_upgrades.silk_touch": "Silk Touch",
   "tooltip.ckutilities.drill.hammer": "Hammer area: %sx%s",
-  "tooltip.ckutilities.upgrade.applied": "Applied %s",
-  "tooltip.ckutilities.upgrade.apply": "Sneak and use with the copper alloy drill in the other hand",
-  "tooltip.ckutilities.upgrade.fortune": "Replaces Silk Touch on the drill",
-  "tooltip.ckutilities.upgrade.no_drill": "Hold the copper alloy drill in your other hand",
-  "tooltip.ckutilities.upgrade.rejected": "That upgrade is already applied, or a stronger one is",
-  "tooltip.ckutilities.upgrade.silk": "Replaces Fortune on the drill"
+  "tooltip.ckutilities.drill.open": "Right click to add or remove upgrades",
+  "tooltip.ckutilities.upgrade.fortune": "Cannot be installed with Silk Touch",
+  "tooltip.ckutilities.upgrade.insert": "Insert this in the copper alloy drill",
+  "tooltip.ckutilities.upgrade.silk": "Cannot be installed with Fortune"
 }
