@@ -15,6 +15,7 @@ import java.util.List;
 /**
  * Four upgrade slots stored on the copper alloy drill. Items move in and out; nothing is consumed.
  * Fortune and silk touch cannot be inserted together. A filled slot must be emptied before a different item goes in.
+ * The upgrade slots and the player inventory are separate windows. Slot positions include the gap between them.
  */
 public class DrillUpgradeMenu extends AbstractContainerMenu {
     public static final int UPGRADE_SLOTS = 4;
@@ -22,6 +23,36 @@ public class DrillUpgradeMenu extends AbstractContainerMenu {
     public static final int SLOT_EFFICIENCY = 1;
     public static final int SLOT_FORTUNE = 2;
     public static final int SLOT_SILK = 3;
+
+    /** Own bordered window for the four upgrade slots. */
+    public static final int UPGRADE_PANEL_WIDTH = 232;
+    public static final int UPGRADE_PANEL_HEIGHT = 58;
+    /** Empty space between the upgrade window and the inventory window. Not part of either texture. */
+    public static final int PANEL_GAP = 12;
+    /** Own bordered window for the normal 27+9 player inventory, narrower than the upgrade window. */
+    public static final int INV_PANEL_WIDTH = 176;
+    public static final int INV_PANEL_HEIGHT = 101;
+    public static final int INV_PANEL_X = (UPGRADE_PANEL_WIDTH - INV_PANEL_WIDTH) / 2;
+    public static final int INV_PANEL_Y = UPGRADE_PANEL_HEIGHT + PANEL_GAP;
+
+    public static final int IMAGE_WIDTH = UPGRADE_PANEL_WIDTH;
+    public static final int IMAGE_HEIGHT = INV_PANEL_Y + INV_PANEL_HEIGHT;
+
+    /** Item position of the first upgrade slot. The screen draws the 18x18 widget one pixel up and left. */
+    public static final int UPGRADE_X = 27;
+    public static final int UPGRADE_Y = 20;
+    public static final int UPGRADE_STEP = 52;
+
+    /** 8px inset inside the inventory panel, matching a vanilla inventory. */
+    public static final int PLAYER_X = INV_PANEL_X + 8;
+    public static final int PLAYER_INV_Y = INV_PANEL_Y + 18;
+    public static final int HOTBAR_Y = INV_PANEL_Y + 76;
+    public static final int INV_LABEL_X = INV_PANEL_X + 8;
+    public static final int INV_LABEL_Y = INV_PANEL_Y + 6;
+
+    public static int upgradeX(int index) {
+        return UPGRADE_X + index * UPGRADE_STEP;
+    }
 
     private static final int PLAYER_START = UPGRADE_SLOTS;
     private static final int HOTBAR_START = PLAYER_START + 27;
@@ -54,22 +85,18 @@ public class DrillUpgradeMenu extends AbstractContainerMenu {
         fortune.blockedBy = silk;
         silk.blockedBy = fortune;
 
-        int inventoryTop = 113;
         for (int row = 0; row < 3; row++) {
             for (int column = 0; column < 9; column++) {
-                this.addSlot(new Slot(playerInventory, column + row * 9 + 9, 8 + column * 18, inventoryTop + row * 18));
+                this.addSlot(new Slot(playerInventory, column + row * 9 + 9, PLAYER_X + column * 18, PLAYER_INV_Y + row * 18));
             }
         }
-        int hotbarTop = 171;
         for (int column = 0; column < 9; column++) {
-            this.addSlot(new Slot(playerInventory, column, 8 + column * 18, hotbarTop));
+            this.addSlot(new Slot(playerInventory, column, PLAYER_X + column * 18, HOTBAR_Y));
         }
-
     }
 
     private UpgradeSlot addUpgradeSlot(int index, DrillUpgradeItem.Kind kind) {
-        int y = 20 + index * 22;
-        UpgradeSlot slot = new UpgradeSlot(this.upgrades, index, 8, y, kind);
+        UpgradeSlot slot = new UpgradeSlot(this.upgrades, index, upgradeX(index), UPGRADE_Y, kind);
         this.addSlot(slot);
         return slot;
     }
