@@ -5,6 +5,7 @@ import com.codekanic.ckutilities.common.items.CKUItems;
 import com.codekanic.ckutilities.common.items.CreativeModTab;
 import com.codekanic.ckutilities.common.items.datacomponents.CKUDataComponents;
 import com.codekanic.ckutilities.common.menu.CKUMenus;
+import com.codekanic.ckutilities.common.registration.CKUBlockEntities;
 
 import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.IEventBus;
@@ -20,6 +21,7 @@ public class CKUtilities {
         CreativeModTab.register(modEventBus);
         CKUItems.init(modEventBus);
         CKUBlocks.init(modEventBus);
+        CKUBlockEntities.init(modEventBus);
         CKUMenus.register(modEventBus);
     }
 

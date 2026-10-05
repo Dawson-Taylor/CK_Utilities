@@ -25,7 +25,7 @@ public class CKUBlockTag extends BlockTagsProvider {
                 BlockTags.MINEABLE_WITH_SHOVEL,
                 BlockTags.MINEABLE_WITH_PICKAXE
         );
-        tag(BlockTags.MINEABLE_WITH_PICKAXE).add(CKUBlocks.COPPER_ALLOY_BLOCK.getKey());
-        tag(BlockTags.NEEDS_IRON_TOOL).add(CKUBlocks.COPPER_ALLOY_BLOCK.getKey());
+        tag(BlockTags.MINEABLE_WITH_PICKAXE).add(CKUBlocks.COPPER_ALLOY_BLOCK.getKey(), CKUBlocks.CHARGER.getKey());
+        tag(BlockTags.NEEDS_IRON_TOOL).add(CKUBlocks.COPPER_ALLOY_BLOCK.getKey(), CKUBlocks.CHARGER.getKey());
     }
 }

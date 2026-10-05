@@ -16,6 +16,8 @@ public class CKULanguageModel extends net.neoforged.neoforge.common.data.Languag
 
         add(CKUItems.COPPER_ALLOY_INGOT.get(), "Copper Alloy Ingot");
         add(CKUBlocks.COPPER_ALLOY_BLOCK.get(), "Copper Alloy Block");
+        add(CKUBlocks.CHARGER.get(), "Charger");
+        add("container.ckutilities.charger", "Charger");
         add(CKUItems.TINY_COAL.get(), "Tiny Coal");
 
         add(CKUItems.COPPER_ALLOY_PICKAXE.get(), "Copper Alloy Pickaxe");

@@ -1,6 +1,7 @@
 package com.codekanic.ckutilities.common.menu;
 
 import com.codekanic.ckutilities.CKUtilities;
+import com.codekanic.ckutilities.common.inventory.ChargerMenu;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.inventory.MenuType;
 import net.neoforged.bus.api.IEventBus;
@@ -13,6 +14,9 @@ public class CKUMenus {
 
     public static final DeferredHolder<MenuType<?>, MenuType<DrillUpgradeMenu>> DRILL_UPGRADES = MENUS.register("drill_upgrades",
             () -> IMenuTypeExtension.create((containerId, inventory, extraData) -> new DrillUpgradeMenu(containerId, inventory)));
+
+    public static final DeferredHolder<MenuType<?>, MenuType<ChargerMenu>> CHARGER = MENUS.register("charger",
+            () -> IMenuTypeExtension.create((containerId, inventory, extraData) -> new ChargerMenu(containerId, inventory)));
 
     public static void register(IEventBus eventBus) {
         MENUS.register(eventBus);

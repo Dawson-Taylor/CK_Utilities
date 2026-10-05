@@ -122,6 +122,15 @@ public class CKURecipe extends RecipeProvider {
                 .group("ckutilities")
                 .unlockedBy("has_copper_alloy_ingot", has(CKUItems.COPPER_ALLOY_INGOT))
                 .save(output);
+        shaped(RecipeCategory.MISC, CKUBlocks.CHARGER.get())
+                .pattern("CCC")
+                .pattern("CBC")
+                .pattern("CCC")
+                .define('C', CKUItems.COPPER_ALLOY_INGOT)
+                .define('B', CKUItems.BATTERY)
+                .group("ckutilities")
+                .unlockedBy("has_battery", has(CKUItems.BATTERY))
+                .save(output);
 
         shaped(RecipeCategory.MISC, CKUItems.UPGRADE_TEMPLATE.get())
                 .pattern("C C")
