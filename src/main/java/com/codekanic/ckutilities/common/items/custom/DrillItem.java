@@ -169,7 +169,7 @@ public class DrillItem extends ItemEnergy {
     @Override
     public InteractionResult useOn(UseOnContext context) {
         Player player = context.getPlayer();
-        if (player == null) {
+        if (player == null || !player.isShiftKeyDown()) {
             return InteractionResult.PASS;
         }
         return this.use(context.getLevel(), player, context.getHand());
@@ -177,6 +177,9 @@ public class DrillItem extends ItemEnergy {
 
     @Override
     public InteractionResult use(Level level, Player player, InteractionHand hand) {
+        if (!player.isShiftKeyDown()) {
+            return InteractionResult.PASS;
+        }
         if (player instanceof ServerPlayer serverPlayer) {
             ItemStack stack = player.getItemInHand(hand);
             serverPlayer.openMenu(new SimpleMenuProvider(
