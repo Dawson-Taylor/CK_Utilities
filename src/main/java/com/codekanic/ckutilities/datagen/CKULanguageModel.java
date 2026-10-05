@@ -50,7 +50,7 @@ public class CKULanguageModel extends net.neoforged.neoforge.common.data.Languag
         add("ckutilities.enabled", "Enabled");
         add("ckutilities.disabled", "Disabled");
         add("tooltip.ckutilities.drill.hammer", "Hammer area: %sx%s");
-        add("tooltip.ckutilities.drill.open", "Right click to add or remove upgrades");
+        add("tooltip.ckutilities.drill.open", "Sneak + right click to add or remove upgrades");
         add("container.ckutilities.drill_upgrades", "Drill Upgrades");
         add("container.ckutilities.drill_upgrades.hammer", "Hammer");
         add("container.ckutilities.drill_upgrades.efficiency", "Efficiency");

@@ -12,8 +12,9 @@ This branch is only for Minecraft 26.2. The Minecraft 1.21.1 line is the separat
 - Energy drill
 - Battery. It starts disabled. Sneak-right-click it to turn charging on.
 - Tiny coal
+- Charger. It charges a drill or battery from an enabled battery in its power slot. The recipe is copper alloy ingots around a battery.
 
-Drill upgrades are included on this branch. Hold the drill in one hand and sneak-use an upgrade in the other. A matching or lower tier is not consumed.
+Drill upgrades are included on this branch. Sneak-right-click the drill to open the upgrade screen, then put upgrades in or take them out. Upgrades are not consumed.
 
 - Hammer size: 3×3, then 5×5, then 9×9
 - Efficiency I through V
