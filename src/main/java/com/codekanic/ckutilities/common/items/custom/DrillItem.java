@@ -6,6 +6,7 @@ import com.codekanic.ckutilities.common.items.datacomponents.CKUDataComponents;
 import com.codekanic.ckutilities.common.items.utils.ToolTier;
 import com.codekanic.ckutilities.common.items.utils.Util;
 import com.codekanic.ckutilities.common.items.utils.WorldUtil;
+import com.codekanic.ckutilities.common.menu.DrillUpgradeMenu;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderGetter;
@@ -15,11 +16,15 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Unit;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.component.Tool;
@@ -162,8 +167,30 @@ public class DrillItem extends ItemEnergy {
     }
 
     @Override
+    public InteractionResult useOn(UseOnContext context) {
+        Player player = context.getPlayer();
+        if (player == null) {
+            return InteractionResult.PASS;
+        }
+        return this.use(context.getLevel(), player, context.getHand());
+    }
+
+    @Override
+    public InteractionResult use(Level level, Player player, InteractionHand hand) {
+        if (player instanceof ServerPlayer serverPlayer) {
+            ItemStack stack = player.getItemInHand(hand);
+            serverPlayer.openMenu(new SimpleMenuProvider(
+                    (containerId, inventory, ignored) -> new DrillUpgradeMenu(containerId, inventory, stack),
+                    Component.translatable("container.ckutilities.drill_upgrades")
+            ));
+        }
+        return InteractionResult.SUCCESS;
+    }
+
+    @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, context, display, tooltip, flag);
+        tooltip.accept(Component.translatable("tooltip.ckutilities.drill.open").withStyle(ChatFormatting.GRAY));
         int radius = stack.getOrDefault(CKUDataComponents.HAMMER_RADIUS.get(), 0);
         if (radius > 0) {
             int size = radius * 2 + 1;
