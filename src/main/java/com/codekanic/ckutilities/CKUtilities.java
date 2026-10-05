@@ -4,8 +4,8 @@ import com.codekanic.ckutilities.common.blocks.CKUBlocks;
 import com.codekanic.ckutilities.common.items.CKUItems;
 import com.codekanic.ckutilities.common.items.CreativeModTab;
 import com.codekanic.ckutilities.common.items.datacomponents.CKUDataComponents;
+import com.codekanic.ckutilities.common.menu.CKUMenus;
 import com.codekanic.ckutilities.common.registration.CKUBlockEntities;
-import com.codekanic.ckutilities.common.registration.CKUMenus;
 
 import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.IEventBus;
@@ -22,7 +22,7 @@ public class CKUtilities {
         CKUItems.init(modEventBus);
         CKUBlocks.init(modEventBus);
         CKUBlockEntities.init(modEventBus);
-        CKUMenus.init(modEventBus);
+        CKUMenus.register(modEventBus);
     }
 
     public static Identifier modLoc(String path) {

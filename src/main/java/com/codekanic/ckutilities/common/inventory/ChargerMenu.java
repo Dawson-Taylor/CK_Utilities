@@ -2,7 +2,7 @@ package com.codekanic.ckutilities.common.inventory;
 
 import com.codekanic.ckutilities.common.blocks.entity.ChargerBlockEntity;
 import com.codekanic.ckutilities.common.items.custom.BatteryItem;
-import com.codekanic.ckutilities.common.registration.CKUMenus;
+import com.codekanic.ckutilities.common.menu.CKUMenus;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;

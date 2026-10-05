@@ -50,11 +50,14 @@ public class CKULanguageModel extends net.neoforged.neoforge.common.data.Languag
         add("ckutilities.enabled", "Enabled");
         add("ckutilities.disabled", "Disabled");
         add("tooltip.ckutilities.drill.hammer", "Hammer area: %sx%s");
-        add("tooltip.ckutilities.upgrade.apply", "Sneak and use with the copper alloy drill in the other hand");
-        add("tooltip.ckutilities.upgrade.applied", "Applied %s");
-        add("tooltip.ckutilities.upgrade.rejected", "That upgrade is already applied, or a stronger one is");
-        add("tooltip.ckutilities.upgrade.no_drill", "Hold the copper alloy drill in your other hand");
-        add("tooltip.ckutilities.upgrade.silk", "Replaces Fortune on the drill");
-        add("tooltip.ckutilities.upgrade.fortune", "Replaces Silk Touch on the drill");
+        add("tooltip.ckutilities.drill.open", "Right click to add or remove upgrades");
+        add("container.ckutilities.drill_upgrades", "Drill Upgrades");
+        add("container.ckutilities.drill_upgrades.hammer", "Hammer");
+        add("container.ckutilities.drill_upgrades.efficiency", "Efficiency");
+        add("container.ckutilities.drill_upgrades.fortune", "Fortune");
+        add("container.ckutilities.drill_upgrades.silk_touch", "Silk Touch");
+        add("tooltip.ckutilities.upgrade.insert", "Insert this in the copper alloy drill");
+        add("tooltip.ckutilities.upgrade.silk", "Cannot be installed with Fortune");
+        add("tooltip.ckutilities.upgrade.fortune", "Cannot be installed with Silk Touch");
     }
 }

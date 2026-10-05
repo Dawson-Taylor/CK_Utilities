@@ -1,7 +1,7 @@
 package com.codekanic.ckutilities.client;
 
 import com.codekanic.ckutilities.CKUtilities;
-import com.codekanic.ckutilities.common.registration.CKUMenus;
+import com.codekanic.ckutilities.common.menu.CKUMenus;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -14,6 +14,7 @@ public final class CKUClient {
 
     @SubscribeEvent
     public static void registerScreens(RegisterMenuScreensEvent event) {
+        event.register(CKUMenus.DRILL_UPGRADES.get(), DrillUpgradeScreen::new);
         event.register(CKUMenus.CHARGER.get(), ChargerScreen::new);
     }
 }
